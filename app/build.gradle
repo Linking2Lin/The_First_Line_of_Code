@@ -1,25 +1,28 @@
+//这个负责所处项目的配置
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'com.android.application'//表明该模块是应用程序模块
+    id 'org.jetbrains.kotlin.android'//使用Kotlin来开发，该声明是必须的
 }
 
+//配置项目构建的各种属性
 android {
-    compileSdk 31
+    compileSdk 31//指定项目的编译版本
 
     defaultConfig {
-        applicationId "com.linking.the_first_line_of_code"
-        minSdk 28
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        applicationId "com.linking.the_first_line_of_code"//应用唯一标识符，默认使用创建项目时使用的包名
+        minSdk 28//指定项目最低兼容的Android版本
+        targetSdk 31//表示已在该目标版本上做过充分的测试，系统会为应用程序启用一些最新的功能和特性
+        versionCode 1//指定项目版本号
+        versionName "1.0"//指定项目版本名
 
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'//在当前项目中启用JUnit测试
     }
 
+    //指定生成安装文件的相关配置，通常有debug和release两个闭包，debug可以忽略不写
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false//指定是否对项目的代码进行混淆
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'//指定混淆时使用的规则文件
         }
     }
     compileOptions {
@@ -31,6 +34,7 @@ android {
     }
 }
 
+//指定当前项目的所有依赖关系
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.4.0'
