@@ -4,24 +4,31 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.linking.the_first_line_of_code.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        Log.d("ai", "onCreate: " + this.opPackageName)
 
         binding.button.setOnClickListener {
 //            val intent = Intent("DAJIJI")
 //            intent.addCategory("JIJIDA")
 //            startActivity(intent)
             val intent = Intent(this,SecondActivity::class.java)
+            startActivity(intent)
+        }
+        if (savedInstanceState != null){
+            val s = savedInstanceState.getString("DA")
+            //Toast.makeText(this,s,Toast.LENGTH_SHORT).show()
+            Log.d("DAJIJI", "onCreate: $s")
         }
     }
 
@@ -49,5 +56,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    /**
+     * 在Activity被系统回收前调用
+     */
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val str = "DA JI JI "
+        outState.putString("DA",str)
+        Log.d("DA", "onSaveInstanceState: $str")
     }
 }
