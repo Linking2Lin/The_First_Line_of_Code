@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.The_First_Line_of_Code">
         <activity
+            android:name=".SecondActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="DAJIJI"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="JIJIDA"/>
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
