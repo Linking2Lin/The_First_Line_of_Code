@@ -22,7 +22,12 @@ class MainActivity : BaseActivity() {
 //            val intent = Intent("DAJIJI")
 //            intent.addCategory("JIJIDA")
 //            startActivity(intent)
-            val intent = Intent(this,SecondActivity::class.java)
+            val intent = Intent(this,SecondActivity::class.java).apply {
+                putExtra("A",1)
+                putExtra("B",2)
+                putExtra("C",3)
+                putExtra("D",4)
+            }
             startActivity(intent)
         }
         if (savedInstanceState != null){

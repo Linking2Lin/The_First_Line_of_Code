@@ -8,4 +8,5 @@ import android.app.Activity
 object ActivityCollector {
     private val activitys = ArrayList<Activity>()
 
+
 }
