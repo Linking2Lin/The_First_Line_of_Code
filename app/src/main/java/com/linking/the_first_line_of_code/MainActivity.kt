@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.linking.the_first_line_of_code.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivity() {
@@ -28,7 +29,20 @@ class MainActivity : BaseActivity() {
                 putExtra("C",3)
                 putExtra("D",4)
             }
-            startActivity(intent)
+            AlertDialog.Builder(this).apply {
+                setTitle("This is a Dialog")
+                setMessage("Something")
+                setCancelable(false)
+                setPositiveButton("确认"){
+                    dialog,which->Toast.makeText(this@MainActivity,"${dialog.toString()}  $which",Toast.LENGTH_SHORT).show()
+                }
+                setNegativeButton("返回"){
+                    dialog,which->Toast.makeText(this@MainActivity,"${dialog.toString()}  $which",Toast.LENGTH_SHORT).show()
+
+                }
+                show()
+            }
+            //startActivity(intent)
         }
         if (savedInstanceState != null){
             val s = savedInstanceState.getString("DA")
