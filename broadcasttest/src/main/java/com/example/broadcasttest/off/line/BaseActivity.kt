@@ -30,6 +30,7 @@ open class BaseActivity :AppCompatActivity(){
                         ActivityCollector.finishAll()//销毁所有
                         val i = Intent(context,LoginActivity::class.java)//构建启动登录界面的意图
                         context.startActivity(i)//启动登录界面
+
                     }
                 }
             }
