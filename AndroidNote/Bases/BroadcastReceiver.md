@@ -1,4 +1,4 @@
-# [广播](https://developer.android.google.cn/guide/components/broadcasts?hl=zh-cn)
+# [BroadcastReceiver广播接收器](https://developer.android.google.cn/guide/components/broadcasts?hl=zh-cn)
 Android应用和系统都可以收发广播消息，广播在关注事件发生时发送，系统会在发生各种系统事件时发送，比如充电，应用可以自定义广播以通知其他应用可能感兴趣的事件，比如某些东西开始下载   
 广播机制主要是为了实现应用和系统传递信号，比如我的某一程序开始运行了，如果其他程序需要在该程序开始运行后进行一些操作，那么这一程序通过广播来通知其他程序该程序已经启动（事件），其他程序接收到了该通知（注册这个事件为感兴趣），接下来各程序开始执行实现设定好的操作    
 * 发送广播：通过Intent，广播消息本身会被封装在一个Intent对象当中

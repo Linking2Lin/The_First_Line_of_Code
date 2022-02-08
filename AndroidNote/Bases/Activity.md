@@ -1,4 +1,4 @@
-# [Activity](https://developer.android.google.cn/guide/components/activities/intro-activities)
+# [Activity活动](https://developer.android.google.cn/guide/components/activities/intro-activities)
 Android应用关键组件，Activity的启动和组合方式是该平台应用模型的基本组成，Android系统通过调用其生命周期特定阶段相对应的特定回调方法来启动Activity实例中的代码。  
 该组件为为应用与用户互动的入口点，在移动应用中，用户与应用的交互并不是始终在同一位置开启，Activity的出现就是为了实现这一范式，当一个应用调用另一个应用时，调用方会调用另一个应用的某个Activity，而不是启动整个应用。  
 通常情况下，一个界面就是一个Activity，应用一般也会包含多个界面，及包含多个Activity，这时，就需要一个Activity被指定为主Activity，这个Activity也是用户启动应用时展示的界面   
