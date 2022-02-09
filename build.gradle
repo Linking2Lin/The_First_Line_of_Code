@@ -1,12 +1,12 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-//这个build.gradle负责全局
+//这个build.gradle负责全局，如果不需要指定全局的gradle配置，一般情况下不需要修改该文件内的内容
 buildscript {
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.2"//声明gradle插件
+        classpath "com.android.tools.build:gradle:7.0.2"//声明gradle插件，让gradle用来构建Android项目
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'//声明kotlin插件
 
         // NOTE: Do not place your application dependencies here; they belong
