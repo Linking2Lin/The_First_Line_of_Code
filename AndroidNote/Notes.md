@@ -16,4 +16,19 @@ Kotlin抛弃了基本数据类型，全部使用了对象数据类型
 尽量将变量申明为val，val只是对象引用不可变，对象本身的改变并不限制   
 
 
+
+
+
+
+
+# C11
+WebView的使用   
+
+OkHttp的使用   
+
+xml和json的传输和解析   
+* xml常用解析方式：1.pull 2.SAX 3.DOM 
+* json常用解析方式：1.JSONObject 2.GSON
+
+
   
