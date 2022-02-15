@@ -28,7 +28,8 @@ OkHttp的使用
 
 xml和json的传输和解析   
 * xml常用解析方式：1.pull 2.SAX 3.DOM 
-* json常用解析方式：1.JSONObject 2.GSON
+* json常用解析方式：1.JSONObject 2.GSON    
+网络请求的回调实现方式
 
 
   
