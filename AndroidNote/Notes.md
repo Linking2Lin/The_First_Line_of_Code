@@ -35,7 +35,64 @@ for：for-i被抛弃，for-each被加强
 * 数据类：data class，自动加上toString等方法
 * 单例类：class关键字改为object即可，调用方式类似与Java静态方法的调用
 ### Lambda编程：
+Lambda表达式结构：`{参数名1：参数类型，参数名2：参数类型 ->函数体}`,最后一行代码会自动作为表达式的返回值    
+参数列表中只有一个参数时，可以不用声明参数名，直接使用`it`来代替
+kotlin完全舍弃new关键字，因此创建匿名类实例的时候需要使用`object：`关键字  
+### 空指针检查：
+kotlin将空指针异常的检查提前到编译时期    
+如果变量或参数可为空，则需在声明时在类名后加上可空声明符`?`    
+判空辅助工具：
+* `?.`：当对象不为空正常调用相应的方法，为空则什么都不做
+* `?:`：左右两边都接收一个表达式，左边表达式结果不为空就返回左边的结果，否则返回右边的结果
+### 函数参数
+* 参数默认值尽量配合键值对传参的形式来使用    
 
+#回调：回调函数的简称，指一段以参数形式传递给其他代码的可执行代码，该函数编写方是A，但是调用方是B，A调用了B的一个函数F1，调用时将回调函数F2作为参数传递给F1，然后B执行F1，执行完成后将结果传给F2，然后执行F2
+
+# C3 Activity活动 && Intent意图
+## Activity：
+Activity的启动和组合方式是Android平台应用模型的基本组成部分，Android系统通过调用各Activity实例中对应各生命周期的回调方法来运行Activity实例中的代码    
+Activity可以看作Android应用重新的最小单元，一个完整的应用程序通常包含多个Activity，其中有一个为主Activity，通常情况下是用户启动应用的第一个界面，但用户与应用的互动开始点可以是其他Activity，应用也可以调用其他应用的某一个Activity，而不是每次都从主Activity启动    
+
+[生命周期](![img.png](img.png))：
+* onCreate：Activity第一次被创建时调用，一般用来执行Activity的初始化操作
+* onStart：Activity由不可见变为可见时调用
+* onResume：准备好与用户进行交互时调用
+* onPause：系统准备启动或恢复另一个Activity时调用
+* onStop：Activity完全不可见时调用
+* onDestroy：Activity被销毁前调用
+* onRestart：Activity由停止状态变为运行状态前调用
+* onSaveInstanceState：携带Bundle类型的参数，采用键值对的形式来保存数据，该方法会在Activity被回收前调用，而oncreate参数中的Bundle会带有回收前保存的数据       
+Activity启动模式，清单文件内指定：
+  * standard：默认模式，在栈顶入栈一个新的Activity实例，栈内是否已纯在
+  * singleTop：栈顶如果是该Activity的实例，就直接使用，否则重新入栈新的实例
+    * singleTask：栈内有已纯在的实例就直接使用并将上面的全部出栈，没有的话再新建实例
+    * singleInstance：启用新的返回栈管理该Activity的实例，通常用于与其他程序共享的Activity，这样不同的程序在访问该Activity时，公用同一个返回栈
+
+
+
+## Intent:
+各组件间进行交互的一种载体
+用来启动其他组件的方式通常有两种：
+* 显示启动：代码里直接构造，指明意图
+* 隐式启动：配合IntentFliter使用，各控件指明响应的意图信息（一个action，多个category，data用来指定响应的数据），代码中构造Intent时只指定信息，系统会通过构造的intent对象里包含的信息，寻找到与信息适配的控件，然后启动         
+
+向其他控件传递数据：
+* 使用一系列putExtra（）向下一个组件传递，数据使用键值对形式储存    
+* 向上一个Avtivity返回数据：使用registerForActivityResult（API29后，之前使用startActivityForResult，29后弃用）    
+
+## C3 kotlin：
+### 标准函数：
+* `let`：在对象上调用，将调用对象本身传递进lambda表达式中
+* `with`：接收两个参数，第一个为任意类型的对象，第二个为Lambda表达式，该函数会在Lambda表达式中提供第一个参数的上下文，并使用Lambda表达式的最后一行代码作为返回值，常用于连续调用同一对象的多个方法
+* `run`：接收一个Lambda参数，在某个对象上调用，在Lambda表达式中提供调用对象的上下文，同样使用最后一行作为返回值返回
+* `apply`：接收调用同上，只是返回对象本身，适用于在一段代码内需要对某一对象多次处理的情况
+### 静态方法：
+使用上，工具类直接使用单例类来干，其他情况下将函数放入`companion object{}`内，实现类似与Java的形式       
+也可以使用顶层方法的形式，对于顶层方法：kotlin内直接调用，Java中静态方法形式       
+
+
+# C4 UI与控件
 
 
 
