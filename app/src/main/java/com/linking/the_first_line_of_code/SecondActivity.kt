@@ -2,6 +2,8 @@ package com.linking.the_first_line_of_code
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import java.lang.StringBuilder
 
 class SecondActivity : BaseActivity() {
