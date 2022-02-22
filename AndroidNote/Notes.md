@@ -134,6 +134,38 @@ Activity启动模式，清单文件内指定：
        
 # C5 [Fragment碎片](https://developer.android.google.cn/guide/fragments?hl=zh-cn) 
 碎片,表示应用界面中可重复使用的一部分，可以定义和管理自己的布局，拥有自己的生命周期，也可以处理自己的输入事件，Fragment不能独立存在，必须由Activity或另一个Fragment托管，Fragment的视图层次结构会成为宿主的视图层次结构的一部分，或附加到宿主的视图层次结构       
+## C5 kotlin：扩展函数与运算符重载
+扩展函数
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # C11
