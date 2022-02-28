@@ -7,7 +7,7 @@ Android系统架构：
 
 Android程序的设计讲究逻辑和视图分离，因此不推荐在Activity中直接编写界面，通常是在布局文件中编写界面，然后在Activity中将布局文件引入进来   
 图片资源一般放在drawable-xxhdpi即可，这是主流的设备分辨率目录       
-
+<br>
 # C2 Kotlin基础
 ### 变量：
 Kotlin通过一个特殊的编译器将代码转为class文件然后交由JVM虚拟机运行
@@ -49,6 +49,8 @@ kotlin将空指针异常的检查提前到编译时期
 
 #回调：回调函数的简称，指一段以参数形式传递给其他代码的可执行代码，该函数编写方是A，但是调用方是B，A调用了B的一个函数F1，调用时将回调函数F2作为参数传递给F1，然后B执行F1，执行完成后将结果传给F2，然后执行F2
 
+<br>
+
 # C3 Activity活动 && Intent意图
 ## Activity：
 Activity的启动和组合方式是Android平台应用模型的基本组成部分，Android系统通过调用各Activity实例中对应各生命周期的回调方法来运行Activity实例中的代码    
@@ -80,6 +82,8 @@ Activity启动模式，清单文件内指定：
 向其他控件传递数据：
 * 使用一系列putExtra（）向下一个组件传递，数据使用键值对形式储存    
 * 向上一个Avtivity返回数据：使用registerForActivityResult（API29后，之前使用startActivityForResult，29后弃用）    
+  
+  <br>
 
 ## C3 kotlin：
 ### 标准函数：
@@ -91,6 +95,7 @@ Activity启动模式，清单文件内指定：
 使用上，工具类直接使用单例类来干，其他情况下将函数放入`companion object{}`内，实现类似与Java的形式       
 也可以使用顶层方法的形式，对于顶层方法：kotlin内直接调用，Java中静态方法形式       
 
+<br>
 
 # C4 UI与控件
 适配相关：
@@ -131,7 +136,10 @@ Activity启动模式，清单文件内指定：
 ## C4 kotlin：
 延迟初始化：通常在全局变量上使用，使用`lateinit`关键字，表明该变量的初始化会在稍后进行，这样在其他地方使用时就不需要再进行判空处理，但是一定要确保在使用前进行初始话，否则会抛出异常
 密封类：一种受限的类继承结构，该类只能有几种子类去继承它，密封类与其所有子类只能定义在同一文件的顶层位置，可以配合when使用，当when条件传入一个密封类变量为条件时，编译器会强制将该类的全部子类进行处理，否则编译不通过
-       
+
+
+<br>
+
 # C5 [Fragment碎片](https://developer.android.google.cn/guide/fragments?hl=zh-cn) 
 碎片,表示应用界面中可重复使用的一部分，可以定义和管理自己的布局，拥有自己的生命周期，也可以处理自己的输入事件，Fragment不能独立存在，必须由Activity或另一个Fragment托管，Fragment的视图层次结构会成为宿主的视图层次结构的一部分，或附加到宿主的视图层次结构       
 ## C5 kotlin：扩展函数与运算符重载
