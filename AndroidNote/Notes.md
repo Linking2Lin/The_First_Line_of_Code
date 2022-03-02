@@ -181,6 +181,8 @@ Android持久化主要是三种方式实现：文件存储、SharedPreferences�
 
 ---
 文件存储：最基本的方式，不对内容进行处理，所有数据都是原封不动的保存到文件中
+使用Context类中的openFileOutput（）方法，该方法接收两个参数，第一个为文件名，不能包括路径，因为所有的文件都默认存储到/data/data/<package name>/files/下，第二个为文件的操作模式
+，一个是覆盖式写入，另一个是追加式写入，该方法返回的是一个FileOutputStream对象，得到该对象后以流式写入即可
 
 
 
