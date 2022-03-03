@@ -181,9 +181,50 @@ Android持久化主要是三种方式实现：文件存储、SharedPreferences�
 
 ---
 文件存储：最基本的方式，不对内容进行处理，所有数据都是原封不动的保存到文件中
-使用Context类中的openFileOutput（）方法，该方法接收两个参数，第一个为文件名，不能包括路径，因为所有的文件都默认存储到/data/data/<package name>/files/下，第二个为文件的操作模式
-，一个是覆盖式写入，另一个是追加式写入，该方法返回的是一个FileOutputStream对象，得到该对象后以流式写入即可
+存储：       
+使用Context类中的openFileOutput（）方法，该方法接收两个参数，第一个为文件名，不能包括路径，因为所有的文件都默认存储到`/data/data/<package name>/files/`下，第二个为文件的操作模式
+，一个是覆盖式写入，另一个是追加式写入，该方法返回的是一个FileOutputStream对象，得到该对象后以Java流形式写入
+       
+读取：
+使用openFileOutput（），只接收一个参数，即要读取的文件名，系统会自动到`/data/data/<package name>/files/`目录下加载该文件，并返回一个FileInputStream对象，得到该对象后以Java流形式读取数据       
+___
 
+SharedPreferences存储：使用键值对的形式来存储数据       
+获得SharedPreferences对象：
+* Context类中的`getSharedPreferences()`方法：该方法接收两个参数，第一个用于指定SharedPreferences文件的名称，如果不存在则会创建一个，SharedPreferences文件都是存放在
+  `data/data/<package name>/shared_prefs`目录下，第二个参数用来指定操作模式，目前只能指定MODE_PRIVATE一种，表示只有当前的应用程序才可对该文件进行读写       
+* Activity类中的`getPreferences()`方法：该方法只接收一个参数来指定操作模式，该方法会自动将当前Activity的类名作为SharedPreferences文件的文件名       
+得到对象后存储数据：    
+* 调用SharedPreferences对象的edit方法获取一个SharedPreferences.Editor对象
+* 向Edit对象中添加数据
+* 调用apply方法将添加的数据提交，完成数据存储操作
+读取SharedPreference内的数据：        
+取得SharedPreference对象，用各get方法取出数据     
+   
+___
+
+SQLite数据库存储
+SQLite:一款轻量级的关系型数据库，支持标准的SQL语法，还遵循了数据库的ACID事务，该数据库内嵌于Android系统中       
+创建数据库：    
+Android提供了一个SQLiteOpenHelper帮助类来管理数据库，该类为抽象类，使用时需自定义类继承实现该类，必须重写onCreate和onUpgrade
+两方法，在这两个方法中实现创建和升级数据库的逻辑，
+该类还有两个实例方法getReadableDatabase和getWritableDatabase，这两方法都可以创建或打开一个现有的数据库（存在就打开，不存在就创建一个新的）并返回一个可对数据库进行读写操作
+的对象，区别在于当数据库不可写入的时候（如磁盘空间已满），getReadableDatabase返回的对象将以只读形式打开数据库，另一个会出现异常       
+SQLiteOpenHelper中有两个构造方法可以重写，一般重写参数少的那个，该方法接收4个参数
+* 1. Context：
+* 2. 数据库名：创建数据库时使用该名称
+* 3. 查询数据时返回一个自定义的Cursor：一般传入null
+* 4. 表示当前数据库版本号，一般用来对数据库执行升级操作       
+构造出SQLiteOpenHelper实例后，再调用该实例的getReadableDatabase或getWritableDatabase方法就可以创建数据库了，数据库文件会存放在`/data/data/<package name>/database/`
+     目录下，此时，重写的onCreate方法也会得到执行，通常在这里执行一些建表的逻辑       
+SQLite内的数据类型：
+* integer：整型
+* real：浮点
+* text：文本
+* blob：二进制
+
+  
+  
 
 
 
