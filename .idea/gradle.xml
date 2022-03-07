@@ -12,12 +12,6 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/broadcasttest" />
-            <option value="$PROJECT_DIR$/databasetest" />
-            <option value="$PROJECT_DIR$/filepersistencetest" />
-            <option value="$PROJECT_DIR$/okhttptest" />
-            <option value="$PROJECT_DIR$/recyclerviewtest" />
-            <option value="$PROJECT_DIR$/retrofittest" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
