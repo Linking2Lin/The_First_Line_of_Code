@@ -205,6 +205,7 @@ ___
 
 SQLite数据库存储
 SQLite:一款轻量级的关系型数据库，支持标准的SQL语法，还遵循了数据库的ACID事务，该数据库内嵌于Android系统中       
+SQLite的作用与目的：缓存应用所需要的数据，同文件直接存储和SharedPreference一样，都是作应用的一个数据仓库，只不过SQLite是使用数据库来管理数据
 创建数据库：    
 Android提供了一个SQLiteOpenHelper帮助类来管理数据库，该类为抽象类，使用时需自定义类继承实现该类，必须重写onCreate和onUpgrade
 两方法，在这两个方法中实现创建和升级数据库的逻辑，
@@ -247,7 +248,8 @@ ___
 
 ___
 
-# C8 ContentProvider内容提供器
+# C8 ContentProvider内容提供器:(一般用来配合程序的SQLite数据库)
+## ContentProvider:
 第七章中的三种方式所保存的数据只能供本程序访问使用，如果需要进行跨程序数据共享，Android提供了ContentProvider来实现不同程序间的数据共享       
 ContentProvider：该组件的作用是提供一种机制在不同的应用程序间实现数据共享的同时保证被访问数据的安全性，目前该方式是Android实现跨程序共享数据的标准方式，该组件可以选择只共享一部分数据，保证了隐私数据的安全性     
 
@@ -268,11 +270,22 @@ ContentProvider：该组件的作用是提供一种机制在不同的应用程�
 * 2. 创建自己的ContentProvider，给程序的数据提供外部访问接口      
   
 #### 使用现有的ContentProvider：
-如果一个应用程序通过ContentProvider对其数据提供了外部访问接口，那么任何其他的应用程序都可以对该部分数据进行访问，系统自带的通讯录、短信等程序都提供了类似的访问接口，
+如果一个应用程序通过ContentProvider对其数据提供了外部访问接口，那么任何其他的应用程序都可以对该部分数据进行访问，系统自带的通讯录、短信等程序都提供了类似的访问接口，程序想访问ContentProvider中共享的数据，需借助ContentResolver类来实现,
+可以通过Context中的getContentResolver（）方法取得该类的实例，该类中提供了一系列的方法用来对数据进行增删改查，insert、update、delete、query，这几个方法接收的都是一个Uri参数
+       
+Uri：内容RRI，该参数为ContentProvider中的数据建立了唯一标识符，主要由两部分组成：authority和path，authority用来区分不同的应用程序，一般使用应用包名，path则是对同一程序中不同的表做区分的，通常加在authority的后面    
+标准格式：content://com.example.app.provider/table       
+
+思路：       
+* 访问其他程序提供数据：获得该程序提供的内容URI，然后借助ContentResolver进行增删改查即可
+
+#### 创建自己的ContentProvider：
+
+
 
   
   
-
+## C8 Kt 泛型和委托:
 
 
 

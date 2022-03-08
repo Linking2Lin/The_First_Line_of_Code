@@ -1,6 +1,6 @@
 //这个负责所处项目的配置
 plugins {
-    id 'com.android.application'//表明该模块是应用程序模块，也可以切换到库模块
+    id 'com.android.library'//表明该模块是应用程序模块，也可以切换到库模块
     id 'org.jetbrains.kotlin.android'//使用Kotlin来开发，该声明是必须的
 }
 
@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
 
-        applicationId "com.linking.the_first_line_of_code"//应用唯一标识符，默认使用创建项目时使用的包名
+        //applicationId "com.linking.the_first_line_of_code"//应用唯一标识符，默认使用创建项目时使用的包名
         minSdk 29//指定项目最低兼容的Android版本
         targetSdk 31//表示已在该目标版本上做过充分的测试，系统会为应用程序启用一些该版本sdk的最新的功能和特性
         versionCode 1//指定项目版本号
