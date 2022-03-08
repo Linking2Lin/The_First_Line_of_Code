@@ -46,7 +46,6 @@ android {
  * 3.远程依赖：对远程仓库上的开源项目添加依赖关系
 */
 dependencies {
-
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     implementation 'com.google.android.material:material:1.4.0'
