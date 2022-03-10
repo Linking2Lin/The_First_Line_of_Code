@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 rootProject.name = "The_First_Line_of_Code"
 include ':app'
 include ':Codes:C8:contactstest'
-include ':KtCodes'
