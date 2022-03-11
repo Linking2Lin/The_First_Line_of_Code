@@ -49,6 +49,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * 权限检查结果
+     */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
