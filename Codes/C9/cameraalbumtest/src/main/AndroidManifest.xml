@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.notificationtest">
+    package="com.example.cameraalbumtest">
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.The_First_Line_of_Code">
         <activity
-            android:name=".NotificationActivity"
+            android:name=".SencondActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
