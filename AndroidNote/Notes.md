@@ -316,10 +316,26 @@ PendingIntent：简单点说就是一个等待合适时机执行的Intent，通�
 
 ### 调用摄像头和相册:
 
-#### Activity Results API：官方推荐获取Activity、Fragment获取数据的方式
+#### Activity Results API：官方推荐获取Activity、Fragment获取返回数据的方式，用来替代startactivityForResult
 * ActivityResultContract：协议，定义了如何传递数据和如何处理返回的数据，一个抽象类，需要继承来创建自己的协议，每个ActivityResultContract都需要定义输入和输出类型
-* ActivityResultLauncher：启动器，调用ActivityResult的Launch方法来启动页面跳转，作用相当于原来的startActivity
+* ActivityResultLauncher：启动器，调用ActivityResult的Launch方法来启动页面跳转，作用相当于原来的startActivity       
 
+
+### 播放多媒体文件，音频和视频
+
+
+
+
+
+
+
+
+
+
+
+            
+
+# C10 Service： 
   
 
 
@@ -338,7 +354,7 @@ PendingIntent：简单点说就是一个等待合适时机执行的Intent，通�
 
 
 
-# C11
+# C11 网络技术
 ### Android网络交互方式：
 * HTTP连接：请求-响应模式，客户端向后端发起请求，后端解析请求，然后返回数据，客户端解析返回的数据
 * socket连接：长连接模式，相当于在客户端和服务器端建立一条双向通道，

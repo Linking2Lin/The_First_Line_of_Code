@@ -1,6 +1,7 @@
 package com.example.cameraalbumtest
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -18,9 +19,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var imageUri:Uri
     lateinit var outputImage:File
 
-    private val myActivityLauncher = registerForActivityResult(Contract()){
-
+    private val requestPiclaunch = registerForActivityResult(ActivityResultContracts.TakePicturePreview()){bitmap->
+        binding.imageView.setImageBitmap(bitmap)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             //启动相机
             val intent = Intent("android.media.action.IMAGE_CAPTURE")
             intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri)
-            startActivityForResult(intent,takePhoto)
+            requestPiclaunch.launch(null)
         }
 
 
