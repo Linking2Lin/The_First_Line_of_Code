@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.cameraalbumtest">
 
     <application
@@ -10,8 +11,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.The_First_Line_of_Code">
         <activity
-            android:name=".SencondActivity"
+            android:name=".result.apis.SecondActivity"
             android:exported="false" />
+        <activity
+            android:name=".result.apis.FirstActivity"
+            android:exported="true" >
+
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -21,6 +28,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:authorities="androidx.core.content.FileProvider"
+            android:name="com.example.cameraalbumtest.fileprovider"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            tools:ignore="MissingClass">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
     </application>
 
 </manifest>
