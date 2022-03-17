@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.cameraalbumtest">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -30,9 +32,8 @@
         </activity>
 
         <provider
-            android:authorities="androidx.core.content.FileProvider"
-            android:name="com.example.cameraalbumtest.fileprovider"
-            android:exported="true"
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.cameraalbumtest.fileprovider"
             android:grantUriPermissions="true"
             tools:ignore="MissingClass">
             <meta-data

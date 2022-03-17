@@ -388,10 +388,15 @@ Uri：内容RRI，该参数为ContentProvider中的数据建立了唯一标识�
 * 3. 构造通知对象，构造时需指定渠道   
 * 4. 调用管理器的notify方法，将通知进行发送         
   
-PendingIntent：简单点说就是一个等待合适时机执行的Intent，通常用来给通知加上点击操作
+PendingIntent：简单点说就是一个等待合适时机执行的Intent，通常用来给通知加上点击操作       
+
+在构造通知对象时，将setContenttext换为setStyle，可以是实现在通知里嵌入长文本、图片等       
 
 
 ### 调用摄像头和相册:
+
+
+
 
 #### Activity Results API：官方推荐获取Activity、Fragment获取返回数据的方式，用来替代startactivityForResult
 * ActivityResultContract：协议，定义了如何传递数据和如何处理返回的数据，一个抽象类，需要继承来创建自己的协议，每个ActivityResultContract都需要定义输入和输出类型
