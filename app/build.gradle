@@ -8,6 +8,7 @@ plugins {
 android {
     compileSdk 31//指定项目的编译版本
 
+
     defaultConfig {
 
         //applicationId "com.linking.the_first_line_of_code"//应用唯一标识符，默认使用创建项目时使用的包名
