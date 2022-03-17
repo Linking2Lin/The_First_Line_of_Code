@@ -8,6 +8,7 @@ import com.example.cameraalbumtest.databinding.ActivitySecondBinding
 
 class SecondActivity : AppCompatActivity() {
     lateinit var binding: ActivitySecondBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySecondBinding.inflate(layoutInflater)
@@ -20,6 +21,6 @@ class SecondActivity : AppCompatActivity() {
 
             finish()
         }
-
     }
+
 }
