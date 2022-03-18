@@ -33,3 +33,5 @@ include ':Codes:C15'
 include ':Codes:C16'
 include ':Codes:C1:helloworld'
 
+include ':Codes:C9:playaudiotest'
+include ':Codes:C9:playvideotest'
