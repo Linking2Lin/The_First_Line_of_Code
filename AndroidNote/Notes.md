@@ -425,7 +425,12 @@ infix函数：kotlin中的一个语法糖，使用该语法糖，可以调整函
 
 # C10 Service： 
   
-
+## 异步消息处理机制：
+Android中异步消息机制主要由4部分组成：Message、Handler、MessageQueue、Looper
+* Message：线程间传递的消息，内部可以携带少量信息，用来在不同的线程间传递数据
+* Handler：处理者，用来发送和处理消息，发送使用Handler中的`sendMessage（）`、`post（）`等方法，发送出的消息经过处理后，会回到Handler的`handleMessage（）`中
+* MessageQueue：消息队列，用来存放所有通过Handler发送的消息，该部分消息会一直存在与消息队列中，等待被处理，每个线程中只会有一个MessageQueue对象
+* Looper：相当于每个线程中MessageQueue的管家，调用Looper的`loop`方法后，会进入一个死循环，当MessageQueue中存在一条消息时，会将其取出并传递到handleMessage方法中，每个线程中只会存在一个Looper对象
 
 
 
