@@ -35,3 +35,6 @@ include ':Codes:C1:helloworld'
 
 include ':Codes:C9:playaudiotest'
 include ':Codes:C9:playvideotest'
+include ':Codes:C10:myapplication'
+include ':Codes:C10:myapplication'
+include ':Codes:C10:androidthreadtest'
