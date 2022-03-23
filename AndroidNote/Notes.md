@@ -293,8 +293,8 @@ ___
 ***SQLite数据库存储***
 SQLite:一款轻量级的关系型数据库，支持标准的SQL语法，还遵循了数据库的ACID事务，该数据库内嵌于Android系统中       
 SQLite的作用与目的：缓存应用所需要的数据，同文件直接存储和SharedPreference一样，都是作应用的一个数据仓库，只不过SQLite是使用数据库来结构化管理数据
-创建数据库：    
-Android提供了一个`SQLiteOpenHelper`帮助类来管理数据库，该类为抽象类，使用时需自定义类继承实现该类，必须重写onCreate和onUpgrade
+### 创建数据库：    
+Android提供了一个`SQLiteOpenHelper`帮助类来管理数据库，***该类为抽象类***，使用时需自定义类继承实现该类，必须重写onCreate和onUpgrade
 两方法，在这两个方法中实现创建和升级数据库的逻辑，
 该类还有两个实例方法`getReadableDatabase`和`getWritableDatabase`，这两方法都可以创建或打开一个现有的数据库（存在就打开，不存在就创建一个新的）并返回一个可对数据库进行读写操作
 的对象，区别在于当数据库不可写入的时候（如磁盘空间已满），getReadableDatabase返回的对象将以只读形式打开数据库，writable会直接出现异常       
@@ -304,7 +304,9 @@ SQLiteOpenHelper中有两个构造方法可以重写，一般重写参数少的�
 * 3. 查询数据时返回一个自定义的Cursor：一般传入null
 * 4. 表示当前数据库版本号，一般用来对数据库执行升级操作       
 构造出SQLiteOpenHelper实例后，再调用该实例的getReadableDatabase或getWritableDatabase方法就可以创建数据库了，数据库文件会存放在`/data/data/<package name>/database/`
-     目录下，此时，重写的onCreate方法也会得到执行，通常在这里执行一些建表的逻辑       
+     目录下，此时，重写的onCreate方法也会得到执行，通常在这里执行一些建表的逻辑     
+
+
 SQLite内的数据类型：
 * integer：整型
 * real：浮点
