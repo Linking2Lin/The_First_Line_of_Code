@@ -303,8 +303,7 @@ SQLiteOpenHelper中有两个构造方法可以重写，一般重写参数少的�
 * 2. 数据库名：创建数据库时使用该名称
 * 3. 查询数据时返回一个自定义的Cursor：一般传入null
 * 4. 表示当前数据库版本号，一般用来对数据库执行升级操作       
-构造出SQLiteOpenHelper实例后，再调用该实例的getReadableDatabase或getWritableDatabase方法就可以创建数据库了，数据库文件会存放在`/data/data/<package name>/database/`
-     目录下，此时，重写的onCreate方法也会得到执行，通常在这里执行一些建表的逻辑     
+构造出SQLiteOpenHelper实例后，再调用该实例的`getReadableDatabase`或`getWritableDatabase`方法就可以创建数据库了，数据库文件会存放在`/data/data/<package name>/database/`目录下，此时，重写的onCreate方法也会得到执行，通常在这里执行一些建表的逻辑     
 
 
 SQLite内的数据类型：
@@ -313,15 +312,15 @@ SQLite内的数据类型：
 * text：文本
 * blob：二进制              
 
-添加数据：       
-CRUD:对应4种操作：CREATE,RETRIEVE,UPDATE,DELETE
+### 添加数据：       
+CRUD:对应4种操作：CREATE（添加）,RETRIEVE（查询）,UPDATE（更新）,DELETE（删除）
 操作:
-1. 借助Helper内返回的SQLiteDatabase对象       
-* 添加数据：SQLiteDatabase中的insert()方法，该方法接收3个参数，第一个是表名，第二个参数用来在未指定添加数据的情况下给某些可为空的列自动赋值NULL，第三个为为
-一个ContentValues对象，它提供了一系列put方法重载，用来向ContentValues中添加数据，只需要将表中的每个列名以及相应的待添加数据传入即可       
-* 更新数据：update（）方法，该方法接收4个参数，第一个为表名，第二个为ContentValues，第三，第四用于约束更新某一行或某几行的数据，不指定的话默认更新所有行      
-* 删除数据：delete（）方法，该方法接收3个参数，第一个为表名，第二第三用于约束删除某一行或某几行的数据，不指定默认删除所有行
-* 查询数据：query（）方法，该方法最少接收7个参数，第一个为表名，第二个用来指定查询哪几列，不指定默认查询所有列，第三第四用于约束查询某一行或某几行的数据，不指定默认查询所有行，
+1. 借助Helper返回的`SQLiteDatabase`对象       
+* 添加数据：`SQLiteDatabase中的insert()`方法，该方法接收3个参数，第一个是表名，第二个参数用来在未指定添加数据的情况下给某些可为空的列自动赋值NULL，
+           第三个为一个ContentValues对象，它提供了一系列put方法重载，用来向ContentValues中添加数据，只需要将表中的每个列名以及相应的待添加数据传入即可       
+* 更新数据：`update（）`方法，该方法接收4个参数，第一个为表名，第二个为ContentValues，第三，第四用于约束更新某一行或某几行的数据，不指定的话默认更新所有行      
+* 删除数据：`delete（）`方法，该方法接收3个参数，第一个为表名，第二第三用于约束删除某一行或某几行的数据，不指定默认删除所有行
+* 查询数据：`query（）`方法，该方法最少接收7个参数，第一个为表名，第二个用来指定查询哪几列，不指定默认查询所有列，第三第四用于约束查询某一行或某几行的数据，不指定默认查询所有行，
 第五个用于指定需要去group by的列，不指定则不对查询结果进行group by操作，第六个用于对group by之后的数据进行进一步过滤，不指定则不过滤，第七个用于指定查询结果的排列方式，不指定则使用默认排序方
   式，该方法返回一个Cursor对象，查询到的所有数据都将从这个对象中取出
   
