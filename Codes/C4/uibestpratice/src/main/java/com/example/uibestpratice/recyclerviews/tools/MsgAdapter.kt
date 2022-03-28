@@ -14,8 +14,9 @@ import java.lang.IllegalArgumentException
  * Is this the price I'm paying for my past mistakes? *
  * ----------------------------------------------------
  */
-class MsgAdapter(private val msgList:List<Message>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
+class MsgAdapter(private val msgList:List<Message>):RecyclerView.Adapter<MsgViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MsgViewHolder
     = if (viewType == Message.TYPE_RECEIVED){
         val view = LayoutInflater.from(parent.context).inflate(R.layout.msg_left_item,parent,false)
         LeftViewHolder(view)
@@ -24,12 +25,12 @@ class MsgAdapter(private val msgList:List<Message>):RecyclerView.Adapter<Recycle
         RightViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MsgViewHolder, position: Int) {
         val msg = msgList[position]
         when(holder){
             is LeftViewHolder -> holder.leftMsg.text = msg.content
             is RightViewHolder -> holder.rightMsg.text = msg.content
-            else -> throw IllegalArgumentException()
+            //else -> throw IllegalArgumentException() 使用密封类将Holder进行修改后，该语句可以优化
         }
     }
 

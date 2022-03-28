@@ -5,6 +5,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uibestpratice.R
 
-class RightViewHolder(view: View):RecyclerView.ViewHolder(view) {
-    val rightMsg: TextView = view.findViewById<TextView>(R.id.rightMsg)
+class LeftViewHolderNoSealed(view:View):RecyclerView.ViewHolder(view) {
+    val leftMsg: TextView = view.findViewById<TextView>(R.id.leftMsg)
 }
