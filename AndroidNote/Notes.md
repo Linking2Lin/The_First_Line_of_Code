@@ -157,7 +157,7 @@ Activity启动模式，清单文件内指定：
 * sp：主要用来处理字体的大小,可以根据用户的字体大小首选项进行缩放，即当控件文字大小指定为sp时，当系统文字大小进行更改后，控件文字大小也会随之改变
 换算关系：
   px与dp换算：
-  px = dp*（density/160），density为屏幕密度，density=dpi/160，dpi（像素密度），表示每英寸距离中有多少个像素点
+  px = dp*（density/160），density为屏幕密度，density=dpi/160，dpi（像素密度），表示每英寸距离屏幕中有多少个像素点
 常用控件：
 * TextView：用来在界面上显示一段文本信息
 * Button:通过设立监听器，实现点击事件的一个控件，可以看作是带点击功能的TextView
@@ -166,25 +166,26 @@ Activity启动模式，清单文件内指定：
 * ProgressBar：在界面上展示一个进度条
 * AlterDialog：在当前界面弹出一个对话框，该对话框置顶于所有界面元素之上，可以屏蔽其他控件的交互能力     
 * ListView（推荐使用RecyclerView）：提供一个列表来展示大量数据，比如音乐播放器的歌曲列表，可以通过自定义子项来实现复杂的界面
-* RecyclerView：一个用来显示大量数据的控件，开发者提供数据并定义每个列表项的外观，库会根据需要动态创建元素，当列表项滚出屏幕时，库不会销毁其视图，库会对屏幕上滚动的新列表项重用该视图，由此可以提升性能，改善应用响应能力并降低功耗       
-##### RecyclerView的使用：
+___
+##### RecyclerView的使用：一个动态列表，用来显示大量数据，开发者提供数据并定义每个列表项的外观，交由库根据需要动态创建元素
 [示例程序](https://github.com/android/views-widgets-samples/tree/main/RecyclerViewKotlin/)
-关键类：
-* RecyclerView：控件，包含与数据视图对应的ViewGroup
-* ViewHolder：列表中每个独立元素都由ViewHolder对象进行定义，创建ViewHolder时，没有关联任何数据，当创建后，RecyclerView会将其绑定到对应的数据，通常使用RecyclerView.ViewHolder来定义
-* Adapter： RecyclerView会请求视图，然后在Adapter中调用方法，将视图绑定到数据上，通常使用RecyclerView.Adapter来定义
-* 布局管理器负责排列列表中的各个元素，可以使用自带，也可以自定义自己的布局管理器，布局管理器均继承于LayouyManager抽象类       
 
-实现步骤：
-* 1 首先确定列表或网格的外观
-* 2 设计列表中每个元素的外观和行为，根据该设计，扩展ViewHolder
-* 3 定义用于将数据与Viewholder相关联的Adapter
+关键类：
+* RecyclerView：控件，包含与数据对应视图的ViewGroup
+* ViewHolder：列表中每个独立元素都由ViewHolder对象进行定义，创建ViewHolder时，没有关联任何数据，当创建后，RecyclerView会将其绑定到对应的数据，通常扩展RecyclerView.ViewHolder来实现定义
+* Adapter： RecyclerView会请求视图，然后在Adapter中调用方法，将视图绑定到数据上，通常使用RecyclerView.Adapter来定义
+* 布局管理器:负责排列列表中的各个元素，可以使用自带，也可以自定义自己的布局管理器，布局管理器均继承于LayouyManager抽象类
+  ListView的布局排列是由自身去管理的，RecyclerView的布局排列交给了LayoutManager，通过继承LayoutManager来实现接口进行扩展，就可以定制RecyclerView的布局排列了
+
+点击事件：不同于ListView的子项点击，RecyclerView的点击交由具体的View去注册
 
 常用布局：
 * LinearLayout：线性布局，将包含的控件在线性方向上依次排列
 * RelativeLayout：相对布局，通过相对定位的方式让控件出现在布局的任何位置
 * FrameLayout：帧布局，所有控件默认摆放在布局左上角，
-* ConstraintsLayout：约束布局，通过给控件添加约束条件来确定位置        
+* ConstraintsLayout：约束布局，通过给控件添加约束条件来确定位置(推荐)        
+
+___
 
 ## C4 kotlin：
 延迟初始化：通常在全局变量上使用，使用`lateinit`关键字，表明该变量的初始化会在稍后进行，这样在其他地方使用时就不需要再进行判空处理，但是一定要确保在使用前进行初始话，否则会抛出异常
