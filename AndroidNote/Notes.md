@@ -337,13 +337,6 @@ ___
 ## C7 高阶函数应用
 ***牢记高阶函数的定义和函数类型的定义，以此进行运用***
 
-
-___
-
-
-
-
-
 ___
 
 # C8 ContentProvider 内容提供器:跨程序分享数据的实现方式
@@ -364,14 +357,15 @@ ContentProvider：该组件的作用是提供一种机制在不同的应用程�
 
 ### ContentProvider:
 该组件的使用方式一般有两种：
-* 1. 使用现有的ContentProvider读取和操作相应程序中的数据
-* 2. 创建自己的ContentProvider，给程序的数据提供外部访问接口      
+* 1. 使用现有的ContentProvider读取和操作相应程序中的数据(一般用来获取系统应用的数据),即通过暴露的接口获取数据
+* 2. 创建自己的ContentProvider，给程序的数据提供外部访问接口，即暴露接口给其他程序      
   
 #### 使用现有的ContentProvider：
-如果一个应用程序通过ContentProvider对其数据提供了外部访问接口，那么任何其他的应用程序都可以对该部分数据进行访问，系统自带的通讯录、短信等程序都提供了类似的访问接口，程序想访问ContentProvider中共享的数据，需借助ContentResolver类来实现,
+如果一个应用程序通过ContentProvider对其数据提供了外部访问接口，那么任何其他的应用程序都可以对该部分数据进行访问，系统自带的通讯录、短信等程序都提供了类似的访问接口，
+程序想访问ContentProvider中共享的数据，需借助`ContentResolver`类来实现,
 可以通过Context中的getContentResolver（）方法取得该类的实例，该类中提供了一系列的方法用来对数据进行增删改查，insert、update、delete、query，这几个方法接收的都是一个Uri参数
        
-Uri：内容RRI，该参数为ContentProvider中的数据建立了唯一标识符，主要由两部分组成：authority和path，authority用来区分不同的应用程序，一般使用应用包名，path则是对同一程序中不同的表做区分的，通常加在authority的后面    
+Uri：内容URI，该参数为ContentProvider中的数据建立了唯一标识符，主要由两部分组成：authority和path，authority用来区分不同的应用程序，一般使用应用包名，path则是对同一程序中不同的表做区分的，通常加在authority的后面，同时头部需要添加协议声明    
 标准格式：content://com.example.app.provider/table       
 
 思路：       
