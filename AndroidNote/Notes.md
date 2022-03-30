@@ -339,10 +339,16 @@ ___
 
 ___
 
-# C8 ContentProvider 内容提供器:跨程序分享数据的实现方式
+# C8 ContentProvider 内容提供器:跨程序分享数据的实现方式,主要用来管理结构化方式存放的数据
+使用场景：1.访问其他程序暴露出来的数据   2.构建提供器，向其他程序暴露自己的数据
 ## ContentProvider:
 第七章中的三种方式（文件，SharedPreferences，sqlite数据库）所保存的数据只能供本程序访问使用，如果需要进行跨程序数据共享，Android提供了ContentProvider来实现不同程序间的数据共享       
-ContentProvider：该组件的作用是提供一种机制在不同的应用程序间实现数据共享的同时保证被访问数据的安全性，目前该方式是Android实现跨程序共享数据的标准方式，该组件可以选择只共享一部分数据，保证了隐私数据的安全性     
+ContentProvider：该组件的作用是提供一种机制在不同的应用程序间实现数据共享的同时保证被访问数据的安全性，目前该方式是Android实现跨程序共享数据的标准方式，该组件可以选择只共享一部分数据，保证了隐私数据的安全性
+
+当一个程序需要将其数据暴露给其他程序使用时，该程序通过通过`ContentProvider`来实现数据暴露，而其他程序通过`ContentResolver`来操作ContentProvider暴露出来的数据
+当程序暴露出数据后，不论其本身是否启动，其他程序都去操作其暴露出来的数据
+
+
 
 ### 运行时权限：
 6.0中引入，使用户不需要在安装时一次性授予所有申请的权限，而是可以在软件运行过程中对某一项权限申请进行授权，即使拒绝，不会影响需要该权限功能外的其他功能的使用，Android中权限大致分为两类       
@@ -357,8 +363,8 @@ ContentProvider：该组件的作用是提供一种机制在不同的应用程�
 
 ### ContentProvider:
 该组件的使用方式一般有两种：
-* 1. 使用现有的ContentProvider读取和操作相应程序中的数据(一般用来获取系统应用的数据),即通过暴露的接口获取数据
-* 2. 创建自己的ContentProvider，给程序的数据提供外部访问接口，即暴露接口给其他程序      
+* 1. 使用现有的ContentProvider读取和操作相应程序中的数据(一般用来获取系统应用的数据),即通过暴露的接口获取其他程序的数据
+* 2. 创建自己的ContentProvider，给程序的数据提供外部访问接口，即暴露接口给其他程序，让其他程序访问自己的数据      
   
 #### 使用现有的ContentProvider：
 如果一个应用程序通过ContentProvider对其数据提供了外部访问接口，那么任何其他的应用程序都可以对该部分数据进行访问，系统自带的通讯录、短信等程序都提供了类似的访问接口，
@@ -368,11 +374,21 @@ ContentProvider：该组件的作用是提供一种机制在不同的应用程�
 Uri：内容URI，该参数为ContentProvider中的数据建立了唯一标识符，主要由两部分组成：authority和path，authority用来区分不同的应用程序，一般使用应用包名，path则是对同一程序中不同的表做区分的，通常加在authority的后面，同时头部需要添加协议声明    
 标准格式：content://com.example.app.provider/table       
 
-思路：       
-* 访问其他程序提供数据：获得该程序提供的内容URI，然后借助ContentResolver进行增删改查即可
+***思路：***       
+* 访问其他程序提供的数据：获得该程序提供的内容URI，然后借助ContentResolver进行增删改查即可
 
 #### 创建自己的ContentProvider：
-
+继承`ContentProvider`并重写其中的6个抽象方法       
+在这些方法内，第一个参数往往是一个Uri对象，该参数表明了调用方期待访问的表和数据，该参数一般有两种类型：
+1. 标准的一个Uri格式，表示希望访问表内所有数据
+2. 在标准格式后加上id，表示访问表中id的数据
+通常使用通配符来匹配：
+* “*” 表示匹配任意长度的任意字符
+* “#”表示匹配任意长度的数字
+所以，一个能匹配任意表的内容Uri格式可以为：content://com.example.app.provider/*
+所以，一个能匹配表a中任一行数据的内容Uri格式可以为：content://com.example.app.provider/a/#
+接着借助`UriMatcher`类，该类提供了一个`addURI()`的方法，该方法接收3个参数，可以分别把authority、path、和一个自定义代码传入，
+这样，当调用UriMatcher的match方法时，就可以将一个Uri对象传入，返回值是某个能匹配这个Uri对象的自定义代码，利用这个代码就可以判断出调用方希望访问的是哪张表中的数据了
 
 
   
@@ -384,7 +400,9 @@ Uri：内容URI，该参数为ContentProvider中的数据建立了唯一标识�
 * 泛型方法：`fun <T> method(para:T):T{}`
 
 委托：一种设计模式，理念是操作对象自己不会处理某段逻辑，而是将工作委托给另一个辅助对象去处理
-* 类委托：
+kotlin中分为类委托和属性委托
+* 类委托：将一个类的具体实现委托给另一个类去完成
+* 属性委托：将一个属性(字段)的具体实现委托给另一个类去完成
 
 
 
@@ -449,17 +467,39 @@ Android实现程序后台运行的解决方案，用来执行不需要和用户�
   
 ## 异步消息处理机制：
 Android中异步消息机制主要由4部分组成：Message、Handler、MessageQueue、Looper
-* Message：线程间传递的消息，内部可以携带少量信息，用来在不同的线程间传递数据
+* Message：线程间传递的消息对象，内部可以携带少量信息，用来在不同的线程间传递数据
 * Handler：处理者，用来发送和处理消息，发送使用Handler中的`sendMessage（）`、`post（）`等方法，发送出的消息经过处理后，会回到Handler的`handleMessage（）`中
 * MessageQueue：消息队列，用来存放所有通过Handler发送的消息，该部分消息会一直存在与消息队列中，等待被处理，每个线程中只会有一个MessageQueue对象
 * Looper：相当于每个线程中MessageQueue的管家，调用Looper的`loop`方法后，会进入一个死循环，当MessageQueue中存在一条消息时，会将其取出并传递到handleMessage方法中，每个线程中只会存在一个Looper对象
 
 
 
+## AsyncTask:11之后废弃，官方推荐使用协程来代替
+
+### Service：（重点在于绑定服务）
+8.0开始，只有应用保持在可见状态下，Service才可稳定运行，应用进入后台时，随时可能被回收，如果需要一些任务保持在后台运行，可以使用前台Service或WorkManager
+
+Android中启动Service有两种方式：
+1. 通过Context的startService（）：该方法启动，访问者与Service之间没有关联，即使访问者退出，Service也任然运行
+2. 通过Context的bindService（）：该方法启动，访问者与Service绑定在一起，访问者一旦退出，Service也会终止
 
 
 
 
+
+
+Activity内通过`startService()`启动的服务在启动Activity是没有控制权的，service启动后就与activity无关
+如果Activity要与Service进行交互，需要使用`bindService()`将服务与活动进行绑定，该方法接收三个参数
+1. intent对象，用来指定要启动的Service
+2. 一个`serviceConnection`对象，用于接听访问者（绑定者）与Service之间的连接情况，
+当访问者与Service之间连接成功时将回调该对象内`onServiceConnected()`方法，当宿主进程终止导致Service与访问者之间断开连接时，回调`onServiceDisconnected`方法（使用unbindService断开连接时，该方法并不会被调用）
+3. 一个标记位（Int），用来标记绑定时是否自动创建Service对象
+        
+
+ServiceConnection对象的onServiceConnected方法中有一个IBinder对象，该对象用来实现与被绑定Service的通信
+当开发Service时，该Service必须提供一个onBind方法，在绑定本地Service的情况下，onBind方法返回的Ibinder对象会传给ServiceConnection对象内的onServiceConnected方法中的service参数（上面第二个），
+这样访问者就可以使用该对象与Service进行通信
+对于Service的onBind方法所返回的IBinder对象，可以理解为Service组件返回的代理对象，Service允许通过该对象来访问Service内部的数据，这样就可以实现Activity与Service之间的通信
 
 
 

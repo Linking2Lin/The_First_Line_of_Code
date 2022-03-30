@@ -2,10 +2,26 @@ package com.linking.contactstest.my.contentprovider
 
 import android.content.ContentProvider
 import android.content.ContentValues
+import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
 
 class MyProvider:ContentProvider() {
+
+    private val table1Dir = 0
+    private val table1Item = 1
+    private val table2Dir = 2
+    private val table2Item = 3
+
+    private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
+
+    init {
+        uriMatcher.addURI("com.example.app.provider","table1",table1Dir)
+        uriMatcher.addURI("com.example.app.provider","table1/#",table1Item)
+        uriMatcher.addURI("com.example.app.provider","table2",table2Dir)
+        uriMatcher.addURI("com.example.app.provider","table1/#",table2Item)
+    }
+
     /**
      * Implement this to initialize your content provider on startup.
      * This method is called for all registered content providers on the
@@ -107,43 +123,28 @@ class MyProvider:ContentProvider() {
      * If `null` then the provider is free to define the sort order.
      * @return a Cursor or `null`.
      */
-    override fun query(
-        uri: Uri,
-        projection: Array<out String>?,
+    override fun query(//从提供器内查询数据
+        uri: Uri,//指定操作对象（哪张表）
+        projection: Array<out String>?,//确定查询哪些列
         selection: String?,
-        selectionArgs: Array<out String>?,
-        sortOrder: String?
-    ): Cursor? {
-        /*
-         * 从ContentProvider中查询数据，第一个指定查询哪张表，第二个用来确定查询哪些列，第三个和第四个用于约束查询哪些行，第五个用来对结果进行排序，结果放在Cursor里返回
-         */
-        TODO("Not yet implemented")
-    }
-
-    /**
-     * Implement this to handle requests for the MIME type of the data at the
-     * given URI.  The returned MIME type should start with
-     * `vnd.android.cursor.item` for a single record,
-     * or `vnd.android.cursor.dir/` for multiple items.
-     * This method can be called from multiple threads, as described in
-     * [Processes
- * and Threads]({@docRoot}guide/topics/fundamentals/processes-and-threads.html#Threads).
-     *
-     *
-     * Note that there are no permissions needed for an application to
-     * access this information; if your content provider requires read and/or
-     * write permissions, or is not exported, all applications can still call
-     * this method regardless of their access permissions.  This allows them
-     * to retrieve the MIME type for a URI when dispatching intents.
-     *
-     * @param uri the URI to query.
-     * @return a MIME type string, or `null` if there is no type.
-     */
-    override fun getType(uri: Uri): String? {
-        /*
-         * 根据传入的内容URI返回相应的MIME类型
-         */
-        TODO("Not yet implemented")
+        selectionArgs: Array<out String>?,//这两用来约束查询哪些行
+        sortOrder: String?//用来对结果进行排序
+    ): Cursor? {//查询的结果放在Cursor内返回
+        when(uriMatcher.match(uri)){
+            table1Dir ->{
+                //查询table1表中的所有数据
+            }
+            table1Item ->{
+                //查询table1表中的单条数据
+            }
+            table2Dir ->{
+                //查询table2表中的所有数据
+            }
+            table2Item ->{
+                //查询table2表中的单条数据
+            }
+        }
+        return null
     }
 
     /**
@@ -158,7 +159,10 @@ class MyProvider:ContentProvider() {
      * @param values A set of column_name/value pairs to add to the database.
      * @return The URI for the newly inserted item.
      */
-    override fun insert(uri: Uri, values: ContentValues?): Uri? {
+    override fun insert(
+        uri: Uri,//指定操作对象
+        values: ContentValues?//插入的数据
+    ): Uri? {
         /*
          * 用来向ContentProvider中添加一条数据，第一个参数指定要添加到的表，第二个参数保存要添加的数据，添加完成后，返回一个用于表示这条新记录的URI
          */
@@ -188,7 +192,11 @@ class MyProvider:ContentProvider() {
      * @return The number of rows affected.
      * @throws SQLException
      */
-    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
+    override fun delete(
+        uri: Uri,
+        selection: String?,
+        selectionArgs: Array<out String>?
+    ): Int {
         /*
          * 用来从ContentProvider中删除数据，第一个指定操作的表，第二个和第三个约束删除哪些行，被删除的行数作为返回值
          */
@@ -217,5 +225,38 @@ class MyProvider:ContentProvider() {
         selectionArgs: Array<out String>?//这两用来约束更新哪些行，受影响的行数作为返回值返回
     ): Int {
         TODO("Not yet implemented")
+    }
+
+    /**
+     * Implement this to handle requests for the MIME type of the data at the
+     * given URI.  The returned MIME type should start with
+     * `vnd.android.cursor.item` for a single record,
+     * or `vnd.android.cursor.dir/` for multiple items.
+     * This method can be called from multiple threads, as described in
+     * [Processes
+ * and Threads]({@docRoot}guide/topics/fundamentals/processes-and-threads.html#Threads).
+     *
+     *
+     * Note that there are no permissions needed for an application to
+     * access this information; if your content provider requires read and/or
+     * write permissions, or is not exported, all applications can still call
+     * this method regardless of their access permissions.  This allows them
+     * to retrieve the MIME type for a URI when dispatching intents.
+     *
+     * @param uri the URI to query.
+     * @return a MIME type string, or `null` if there is no type.
+     */
+    override fun getType(uri: Uri): String? {//所有提供器都必须实现的一个方法
+        /*
+         * 根据传入的内容URI返回相应的MIME类型，
+         * 一个内容URI对应的的MIME字符串主要由3部分组成
+         * 1.必须以vnd开头
+         * 2.如果URI以路径结尾，则后接android.cursor.dir/ ，如果以id结尾，则后接android.cursor.item/
+         * 3.最后接上vnd.<authority>.<path>
+         */
+        return when(uriMatcher.match(uri)){
+            table1Dir -> "vnd.android.cursor.dir/vnd.com.example.app.provider.table1"
+            else ->null
+        }
     }
 }

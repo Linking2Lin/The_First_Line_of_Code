@@ -21,5 +21,4 @@ object ActivityCollector {
         }
         activities.clear()
     }
-
 }

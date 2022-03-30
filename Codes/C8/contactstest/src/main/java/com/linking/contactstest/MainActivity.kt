@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("Range")
     private fun readContacts(){
+        //查询联系人数据
         contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,null,null,null)?.apply {
             while (moveToNext()){
                 //获取姓名

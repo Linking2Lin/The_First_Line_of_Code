@@ -9,6 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.The_First_Line_of_Code">
+        <provider
+            android:name=".DatabaseContentProvider"
+            android:authorities="com.example.databasetest.provider"
+            android:enabled="true"
+            android:exported="true"></provider>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
