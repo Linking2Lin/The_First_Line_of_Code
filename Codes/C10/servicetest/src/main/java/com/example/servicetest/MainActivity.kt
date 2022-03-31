@@ -8,7 +8,10 @@ import android.os.Binder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import com.example.servicetest.databinding.ActivityMainBinding
+import com.example.servicetest.foreground.ForegroundService
+import com.example.servicetest.intent.service.MyIntentService
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -33,7 +36,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.startService.setOnClickListener {
-            val intent = Intent(this,MyService::class.java)
+            //val intent = Intent(this,MyService::class.java)
+            //val intent = Intent(this,ForegroundService::class.java)
+            Log.d("Main", "onCreate: ${Thread.currentThread().name}")
+            val intent = Intent(this,MyIntentService::class.java)
             startService(intent)
         }
 

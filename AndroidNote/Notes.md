@@ -473,8 +473,8 @@ Android中异步消息机制主要由4部分组成：Message、Handler、Message
 * Looper：相当于每个线程中MessageQueue的管家，调用Looper的`loop`方法后，会进入一个死循环，当MessageQueue中存在一条消息时，会将其取出并传递到handleMessage方法中，每个线程中只会存在一个Looper对象
 
 
-
 ## AsyncTask:11之后废弃，官方推荐使用协程来代替
+
 
 ### Service：（重点在于绑定服务）
 8.0开始，只有应用保持在可见状态下，Service才可稳定运行，应用进入后台时，随时可能被回收，如果需要一些任务保持在后台运行，可以使用前台Service或WorkManager
@@ -482,10 +482,6 @@ Android中异步消息机制主要由4部分组成：Message、Handler、Message
 Android中启动Service有两种方式：
 1. 通过Context的startService（）：该方法启动，访问者与Service之间没有关联，即使访问者退出，Service也任然运行
 2. 通过Context的bindService（）：该方法启动，访问者与Service绑定在一起，访问者一旦退出，Service也会终止
-
-
-
-
 
 
 Activity内通过`startService()`启动的服务在启动Activity是没有控制权的，service启动后就与activity无关
@@ -501,21 +497,55 @@ ServiceConnection对象的onServiceConnected方法中有一个IBinder对象，�
 这样访问者就可以使用该对象与Service进行通信
 对于Service的onBind方法所返回的IBinder对象，可以理解为Service组件返回的代理对象，Service允许通过该对象来访问Service内部的数据，这样就可以实现Activity与Service之间的通信
 
+### Service生命周期：
+不同的启动方式对应的生命周期不同：
+* startService启动：如果该service之前未被创建，会先调用onCreate，之后调用onStartCommand，如果之前已经被创建，则不会调用onCreate，就算onStartCommand多次执行，每个Service只会存在一个实例，直到外部stopService执行
+* bindService启动：之前未被创建，同样先执行onCreate然后执行onBind，如果连接未断开，Service会一直保持运行状态
+
+### 前台Service：类似通知的使用方式，可以保证程序被退出时service仍在运行 
+
+### IntentService(11 后废弃，推荐使用WorkManager或JonIntentService代替)
+由于Service中的代码默认运行在主线程上，为了避免ANR，需要在服务中另开线程进行耗时处理，但这样会导致必须手动去关闭，否则Service会一直处于运行状态
+为了更好的创建一个异步的、会自动停止的Service，Android提供了一个IntentService类,该类的服务在启动时会自动开启线程执行`onHandleIntent`中的代码，执行完毕后会自动关闭服务
 
 
 
+## 泛型 KT special
+
+### 泛型实化：
+Java类型擦除：泛型对类型的约束只存在于编译期，对于`List<T>`运行时T的实际类型是被擦除的，JVM只知道其是一个List对象，但并不知道其本来只允许包含那种类型的元素，也就是在运行期间是无法知道T的实际类型的       
+所有基于JVM的语言的泛型功能都是通过类型擦除实现的，但是kotlin提供了内联函数，内联函数中的代码在编译时会自动替换到调用它的地方，这样就不存在泛型擦除的问题了，代码会在编译后直接使用实际的类型来替代内联函数中的泛型声明
+也就是说，Kotlin中是可以将内联函数中的泛型进行实化的      
+
+使用限制：
+* 函数必须是内联函数
+* 在声明泛型的地方必须加上reified关键字来表示该泛型要进行实化       
+
+语法：`inline fun <reified T> getDenericType(){}`
+
+应用：通过泛型实化和高阶函数实现启动Activity等的简化(C10.kotlins.reifieds)
+
+### 协变和逆变,核心在于A与B有继承关系，那么通过协逆变使其以它们为参数的泛型类也建立联系
+***约定：一个泛型类或泛型接口中的方法，参数列表是接收数据的地方，因此称为in位置，而返回值是输出数据的地方，称为out位置`fun method(para:T(in位置)):T(out位置){}`***
+
+协变的定义：如果定义了一个`MyClass<T>`的泛型类，其中`A`是`B`的子类，同时`MyClass<A>`又是`MyClass<B>`的子类，那么`MyClass`在`T`这个类型上是协变的
+
+如果一个泛型类在泛型上的数据是只读的话，则其是没有类型转换安全隐患的，而要实现这一点的话，则需要让`MyClass<T>`类中所有方法都不能接收`T`类型的参数，换句话说，`T`只能出现在`out`位置上，不能出现在`in`位置上
+
+逆变的定义：如果定义了一个`MyClass<T>`的泛型类，其中`A`是`B`的子类，同时`MyClass<B>`又是`MyClass<A>`的子类，那么`MyClass`在`T`这个类型上是逆变的
+
+逆变的`T`位置与协变相反
 
 
 
-
-
+___
 # C11 网络技术
 ### Android网络交互方式：
 * HTTP连接：请求-响应模式，客户端向后端发起请求，后端解析请求，然后返回数据，客户端解析返回的数据
 * socket连接：长连接模式，相当于在客户端和服务器端建立一条双向通道，
 ### 网络请求方式
 * 使用HttpURLConnection：原生方式
-* 使用OkHttp：第三方
+* 使用OkHttp：第三方（包括Retrofit）
 ### 数据媒介：
 * xml：常用解析方式：1.pull解析 2.SAX解析 3.DOM解析
 * JSON：常用解析方式：1.JSONObject，原生 2.借用GSON来进行解析
