@@ -11,6 +11,7 @@
         android:theme="@style/Theme.The_First_Line_of_Code">
         <activity
             android:name=".MainActivity"
+            android:label="HHH "
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
