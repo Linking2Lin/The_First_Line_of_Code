@@ -11,7 +11,7 @@ interface ExampleService {
 
     //对应 http://example.com/get_data.json
     @GET("get_data.json")
-    fun getData(): retrofit2.Call<Data>
+    fun getData(): Call<Data>
 
     //对应 http://example.com/<page>/get_data.json
     @GET("{page}/get_data.json")

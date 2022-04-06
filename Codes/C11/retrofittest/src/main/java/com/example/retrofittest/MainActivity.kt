@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
                 .build()//构建retrofit对象
             val appService = retrofit.create(AppService::class.java)
             appService.getAppData().enqueue(object : Callback<List<App>>{
+
                 override fun onResponse(call: Call<List<App>>, response: Response<List<App>>) {
                     val list = response.body()
                     if (list!=null){

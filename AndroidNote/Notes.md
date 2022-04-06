@@ -541,6 +541,14 @@ Java类型擦除：泛型对类型的约束只存在于编译期，对于`List<T
 ___
 # C11 网络技术
 
+核心点：
+* 通过HTTP进行网络交互：两种方式：HttpURLConnection和OkHttp
+* 数据解析方式：XML和JSON，这是现在主流的数据载体方式
+* 回调机制和Retrofit：Re是现在主流的网络库
+* Kotlin的协程
+
+
+
 ### WebView:内置浏览器的控件，可以在控件内实现简单的浏览器功能
 
 
@@ -565,7 +573,7 @@ OkHttp使用方式：
 
 
 ### Retrofit与回调机制
-* Retrofit：最常用的网络库，基于OkHttp，也可以结合RxJava来使用
+* Retrofit：最常用的网络库，基于OkHttp，也可以结合RxJava来使用 
 * 回调机制：因为网络请求属于耗时操作（虽然一般用不了多长时间），如果在UI线程内执行网络操作，容易引发ANR，所以借用回调机制来规避
 
 
@@ -583,5 +591,8 @@ OkHttp使用方式：
 * CoroutineBuilder：协程构建器，协程在CoroutineScope的上下文中通过launch、async等协程构建器来进行声明并启动
 
 
+suspendCoroutine函数：必须在协程作用域或挂起函数中调用，其接收一个Lambda表达式参数，主要作用是将当前协程立即挂起，然后在一个普通的线程中执行Lambda表达式中的代码 
+
 
   
+# C12 Material Design
