@@ -596,3 +596,25 @@ suspendCoroutine函数：必须在协程作用域或挂起函数中调用，其�
 
   
 # C12 Material Design
+
+
+
+# C13 Jetpack
+2018年谷歌推出的一个开发组件工具集，其内部的组件多数不依赖于任何Android系统版本，通常定义在AndroidX库中，该工具集主要由基础、架构、行为、界面4个部分组成
+
+## ViewModel：分担一部风Activity的工作，专门用来存放与界面相关的数据
+只要是界面上能看到的数据，相关的变量都应存放在ViewModel中，而不是Activity中，这样在一定程度上会减少Activity中的逻辑       
+另外，ViewModel还有一个非常重要的特性：当手机发生屏幕旋转时，Activity会重新创建，同时存放在Activity中的数据会丢失，而ViewModel的生命周期与Activity不同，它可以保证在手机屏幕发生旋转时不会被重新
+创建，只有当Activity退出时才会跟着Activity一起销毁，因此，将界面相关数据存放在ViewModel中，即使旋转手机屏幕，界面上的数据也不会丢失    
+
+ViewModel的创建：不能直接去创建`ViewModel`的实例，而是一定要通过`ViewModelProvider`来获取`ViewModel`的实例
+语法规则：`ViewModelProvider(活动或碎片的实例).get(<MyViewModel>::class.java)`
+        
+## Lifecycles:让任何一个类感知Activity的生命周期，同时不需要在Activity中编写大量的逻辑处理
+借助注解在观察者中获取Activity或Fragment的生命周期,
+
+## LiveData：一种响应式组件，可以包含任何类型的数据，并在数据发生变化时通知给观察者，该组件通常与ViewModel结合使用
+`MutableLiveData`：一种可变的liveData，主要有三种读写数据的方法：
+* getValue：获取其中包含的数据
+* setValue：给LiveData设置数据，只能在主线程中调用
+* postValue：给LiveData设置数据，非主线程中调用
