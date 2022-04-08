@@ -651,3 +651,9 @@ LiveData之所以能够称为Activity与ViewModel之间通信的桥梁，依靠�
 
 # C14 开发技巧
 
+## 获取全局context：构建自己的类继承Application，然后在清单文件内指定应用初始化时实例化自己的类
+
+## Intent传递对象：通常有两种方式
+* Serializable：序列化，将一个对象转换为可存储或可传送的状态，使用方式只需让类实现Serizable接口即可，需要注意的是反序列化后是一个新的对象
+* Parcelable：原理是将一个完整的对象分解，而分解后的每一部分都是Intent所支持的数据类型
+
