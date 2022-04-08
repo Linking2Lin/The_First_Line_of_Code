@@ -602,7 +602,7 @@ suspendCoroutine函数：必须在协程作用域或挂起函数中调用，其�
 # C13 Jetpack
 2018年谷歌推出的一个开发组件工具集，其内部的组件多数不依赖于任何Android系统版本，通常定义在AndroidX库中，该工具集主要由基础、架构、行为、界面4个部分组成
 
-## ViewModel：分担一部风Activity的工作，专门用来存放与界面相关的数据
+## ViewModel：分担一部分Activity的工作，专门用来存放与界面相关的数据，让Activity只做数据的显示，拿掉其内部对数据的逻辑处理
 只要是界面上能看到的数据，相关的变量都应存放在ViewModel中，而不是Activity中，这样在一定程度上会减少Activity中的逻辑       
 另外，ViewModel还有一个非常重要的特性：当手机发生屏幕旋转时，Activity会重新创建，同时存放在Activity中的数据会丢失，而ViewModel的生命周期与Activity不同，它可以保证在手机屏幕发生旋转时不会被重新
 创建，只有当Activity退出时才会跟着Activity一起销毁，因此，将界面相关数据存放在ViewModel中，即使旋转手机屏幕，界面上的数据也不会丢失    
@@ -610,11 +610,44 @@ suspendCoroutine函数：必须在协程作用域或挂起函数中调用，其�
 ViewModel的创建：不能直接去创建`ViewModel`的实例，而是一定要通过`ViewModelProvider`来获取`ViewModel`的实例
 语法规则：`ViewModelProvider(活动或碎片的实例).get(<MyViewModel>::class.java)`
         
-## Lifecycles:让任何一个类感知Activity的生命周期，同时不需要在Activity中编写大量的逻辑处理
+## Lifecycles:让任何一个类感知Activity的生命周期，同时不需要在Activity中编写大量的逻辑处理，也就是提供一种机制，可以在任意位置监听某一Activity的生命周期
 借助注解在观察者中获取Activity或Fragment的生命周期,
 
-## LiveData：一种响应式组件，可以包含任何类型的数据，并在数据发生变化时通知给观察者，该组件通常与ViewModel结合使用
+## LiveData：一种可观察的数据存储类，与常规观察类不同的是其具有生命周期感知能力，该能力确保其仅更新处于活跃生命周期的应用组件观察者（一种响应式组件，可以包含任何类型的数据，并在数据发生变化时通知给观察者，该组件通常与ViewModel结合使用）
 `MutableLiveData`：一种可变的liveData，主要有三种读写数据的方法：
 * getValue：获取其中包含的数据
 * setValue：给LiveData设置数据，只能在主线程中调用
 * postValue：给LiveData设置数据，非主线程中调用
+
+永远只暴露不可变的LiveData给外部，确保非ViewModel中只能观察LiveData的数据变化，而不能给其设置数据
+也就是用ViewModel和LiveData配合使用，确保Activity只有数据的访问权，没有直接操作权
+LiveData：
+* map():将一个类型的LiveData转化为任意其他类型的LiveData
+* switchMap():如果ViewModel中的某个LiveData对象是调用其他方法获取的，那么就可以借助switchMap方法，将这个LiveData对象转换为另一个可观察的LiveData对象
+
+LiveData之所以能够称为Activity与ViewModel之间通信的桥梁，依靠的就是Lifecycles组件，LiveData在内部使用了Lifecycles组件来自我感知生命周期的变化       
+
+## Room：官方推出的ORM（Object Relational Mapping，对象关系映射）框架，用来将面向对象的语言和面向关系的数据库之间建立一种映射关系，核心在于使用面向对象的思维来和数据库进行交互
+整体结构：
+* Entity：用来定义封装实际数据的实体类，每个实体类都会在数据库中有一张对应的表，并且表中的列是根据实体类中的字段自动生成的
+* Dao：数据访问对象，通常在此对数据库的各项操作进行封装，在实际编程中，逻辑层就不需要和底层数据库打交道了，直接与Dao层进行交互
+* Database：用来定义数据库中的关键信息，包括数据库的版本号、包含哪些实体类以及提供Dao层的访问实例
+
+对数据库的访问只有增删改查4种操作，但业务需求确是千变万化的，Dao层要做的是覆盖所有的业务需求，使得业务方永远只需要与Dao层进行交互，而不需要和底层数据库打交道       
+
+## WorkManager:用来处理一些要求定时执行的任务，它可以根据操作系统的版本自动选择底层的实现方式，此外还支持周期性任务、链式任务处理等功能
+其只是一个处理定时任务的工具，可以保证在应用退出甚至手机重启的情况下，之前注册的任务任然会得到执行，因此，该组件适合用来执行一些定期和服务器进行交互的任务，比如周期性地同步数据等
+需要注意的是：使用该组件注册的周期性任务不一定会准时执行，系统为了减少资源损耗，可能会将触发时间临近的几个任务放在一起执行
+基本用法：
+* 定义一个后台任务，并实现具体的任务逻辑
+* 配置该后台任务的运行条件和约束信息，并构建后台任务请求
+* 将该后台任务请求传入`WorkManager`的`enqueue()`方法中，系统会在合适的时间运行
+
+国产手机上WorkManager可能无法正常使用，因为国产手机在定制Android时会允许用户一键杀死非白名单应用，被杀死的应用程序即无法接收广播，也无法允许WorkManager后台任务       
+
+## C13 kt： DSL（领域特定语言Domain Specific Language）：编程语言赋予开发者的一种特殊能力，通过它可以编写出一些看似脱离其原始语法结构的代码，从而构建出一种专有的语法结构
+常用实现方式：高阶函数
+
+
+# C14 开发技巧
+
