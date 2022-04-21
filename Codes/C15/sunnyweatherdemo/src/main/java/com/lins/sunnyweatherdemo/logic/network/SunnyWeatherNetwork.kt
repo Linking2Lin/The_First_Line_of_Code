@@ -1,5 +1,6 @@
 package com.lins.sunnyweatherdemo.logic.network
 
+import android.util.Log
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -9,7 +10,7 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 /**
- * 统一网络数据源访问入口
+ * 统一网络数据源访问入口，封装所有的网络请求
  * @author Lin
  * @date 2022/4/13
  * ----------------------------------------------------
@@ -27,15 +28,16 @@ object SunnyWeatherNetwork {
      * 直到服务器响应请求后，await()将解析出来的数据模型对象取出并返回，同时恢复当前协程的执行
      * searchPlaces()函数在得到awit()的返回值后，将数据返回到上一层
      */
-    private suspend fun <T> Call<T>.await():T{
-        return suspendCoroutine { continuation ->
+    private suspend fun <T> Call<T>.await():T{//给Call里扩展了一个await函数
+        return suspendCoroutine { continuation ->//当前协程挂起，开启普通线程来执行下面的操作
             enqueue(object : Callback<T>{
                 override fun onResponse(call: Call<T>, response: Response<T>) {
+                    Log.d("获取", "onResponse: ${response.body().toString()}")
                     val body = response.body()
                     if (body!=null){
                         continuation.resume(body)
                     }else{
-                        continuation.resumeWithException(RuntimeException("response body is null"))
+                        continuation.resumeWithException(RuntimeException("response body is wrong"))
                     }
                 }
 

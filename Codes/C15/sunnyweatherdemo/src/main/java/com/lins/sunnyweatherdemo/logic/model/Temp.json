@@ -1,0 +1,163 @@
+{
+  "code": "200",
+  "location": [
+    {
+      "name": "贝雅",
+      "id": "B675F",
+      "lat": "36.73199",
+      "lon": "9.18100",
+      "adm2": "贝雅",
+      "adm1": "巴杰省",
+      "country": "突尼斯",
+      "tz": "Africa/Tunis",
+      "utcOffset": "+01:00",
+      "isDst": "0",
+      "type": "city",
+      "rank": "41",
+      "fxLink": "http://hfx.link/216m1"
+    },
+    {
+      "name": "Bejaïa",
+      "id": "EBC75",
+      "lat": "36.75000",
+      "lon": "5.06666",
+      "adm2": "Bejaïa",
+      "adm1": "贝贾亚省",
+      "country": "阿尔及利亚",
+      "tz": "Africa/Algiers",
+      "utcOffset": "+01:00",
+      "isDst": "0",
+      "type": "city",
+      "rank": "41",
+      "fxLink": "http://hfx.link/11oe1"
+    },
+    {
+      "name": "贝胡马",
+      "id": "8F472",
+      "lat": "10.18333",
+      "lon": "-68.25000",
+      "adm2": "Bejuma",
+      "adm1": "卡拉沃沃州",
+      "country": "委内瑞拉",
+      "tz": "America/Caracas",
+      "utcOffset": "-04:00",
+      "isDst": "0",
+      "type": "city",
+      "rank": "55",
+      "fxLink": "http://hfx.link/299h1"
+    },
+    {
+      "name": "贝雅",
+      "id": "6693B",
+      "lat": "38.01800",
+      "lon": "-7.86600",
+      "adm2": "贝雅",
+      "adm1": "贝雅区",
+      "country": "葡萄牙",
+      "tz": "Europe/Lisbon",
+      "utcOffset": "+01:00",
+      "isDst": "1",
+      "type": "city",
+      "rank": "61",
+      "fxLink": "http://hfx.link/1z9p1"
+    },
+    {
+      "name": "Beja (Santiago Maior e São João Baptista)",
+      "id": "32985",
+      "lat": "38.01361",
+      "lon": "-7.86972",
+      "adm2": "贝雅",
+      "adm1": "贝雅区",
+      "country": "葡萄牙",
+      "tz": "Europe/Lisbon",
+      "utcOffset": "+01:00",
+      "isDst": "1",
+      "type": "city",
+      "rank": "61",
+      "fxLink": "http://hfx.link/3t6w1"
+    },
+    {
+      "name": "贝哈尔",
+      "id": "EEE3A",
+      "lat": "40.38800",
+      "lon": "-5.76600",
+      "adm2": "贝哈尔",
+      "adm1": "卡斯蒂利亚-里昂",
+      "country": "西班牙",
+      "tz": "Europe/Madrid",
+      "utcOffset": "+02:00",
+      "isDst": "1",
+      "type": "city",
+      "rank": "62",
+      "fxLink": "http://hfx.link/odp1"
+    },
+    {
+      "name": "Bejucal",
+      "id": "63405",
+      "lat": "22.92861",
+      "lon": "-82.38861",
+      "adm2": "Bejucal",
+      "adm1": "玛雅贝克省",
+      "country": "古巴",
+      "tz": "America/Havana",
+      "utcOffset": "-04:00",
+      "isDst": "1",
+      "type": "city",
+      "rank": "65",
+      "fxLink": "http://hfx.link/11of1"
+    },
+    {
+      "name": "Bejucal de Ocampo",
+      "id": "3F833",
+      "lat": "15.45000",
+      "lon": "-92.15000",
+      "adm2": "Bejucal de Ocampo Municipality",
+      "adm1": "Chiapas",
+      "country": "墨西哥",
+      "tz": "America/Mexico_City",
+      "utcOffset": "-05:00",
+      "isDst": "1",
+      "type": "city",
+      "rank": "75",
+      "fxLink": "http://hfx.link/27ng1"
+    },
+    {
+      "name": "Bejuco",
+      "id": "22D93",
+      "lat": "8.60400",
+      "lon": "-79.89499",
+      "adm2": "Bejuco",
+      "adm1": "Panamá Oeste",
+      "country": "巴拿马",
+      "tz": "America/Panama",
+      "utcOffset": "-05:00",
+      "isDst": "0",
+      "type": "city",
+      "rank": "85",
+      "fxLink": "http://hfx.link/11og1"
+    },
+    {
+      "name": "贝希斯",
+      "id": "B2970",
+      "lat": "39.90944",
+      "lon": "-0.70916",
+      "adm2": "Castellón Province",
+      "adm1": "Valencian Community",
+      "country": "西班牙",
+      "tz": "Europe/Madrid",
+      "utcOffset": "+02:00",
+      "isDst": "1",
+      "type": "city",
+      "rank": "82",
+      "fxLink": "http://hfx.link/3twj1"
+    }
+  ],
+  "refer": {
+    "sources": [
+      "QWeather"
+    ],
+    "license": [
+      "commercial license"
+    ]
+  }
+}

@@ -17,11 +17,13 @@ class SunnyWeatherApplication:Application() {
         @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
 
-        //令牌值，用来与服务器交互
-        const val TOKEN = " "
+        /**和风天气KEY*/
+        const val KEY = "607b7784a83347ce87ca042671a5cde2"
+        /**高德天气KEY*/
+        //const val KEY = "14fd98ccb4ed94f7ea275a92756d038d"
     }
 
-    //在应用启动时会执行，这样上面的context就会得到程序全局context
+    //在应用启动时会执行，这样伴生对象内的context就会得到程序全局context
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
