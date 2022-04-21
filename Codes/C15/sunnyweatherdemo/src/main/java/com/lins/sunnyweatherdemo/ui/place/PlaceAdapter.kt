@@ -13,8 +13,8 @@ import com.lins.sunnyweatherdemo.logic.model.Place
 
 class PlaceAdapter(private val fragment:Fragment,private val placeList:List<LocationHF>):RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
     inner class ViewHolder(view: View):RecyclerView.ViewHolder(view){
-        val placeName = view.findViewById<TextView>(R.id.placeName)
-        val placeAddress = view.findViewById<TextView>(R.id.placeAddress)
+        val placeName: TextView = view.findViewById<TextView>(R.id.placeName)
+        val placeAddress: TextView = view.findViewById<TextView>(R.id.placeAddress)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,7 +26,7 @@ class PlaceAdapter(private val fragment:Fragment,private val placeList:List<Loca
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val place = placeList[position]
         holder.placeName.text = place.name
-        holder.placeAddress.text = place.lat +"  "+ place.lon
+        holder.placeAddress.text = "${place.country} ${place.adm1} ${place.adm2}"
     }
 
     override fun getItemCount(): Int {

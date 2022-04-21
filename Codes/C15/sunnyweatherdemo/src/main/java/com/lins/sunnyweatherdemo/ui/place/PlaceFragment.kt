@@ -57,7 +57,7 @@ class PlaceFragment:Fragment() {
                 viewModel.placeList.addAll(place)
                 adapter.notifyDataSetChanged()
             } else {
-                Toast.makeText(activity, "NO ", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(activity, "NO ", Toast.LENGTH_SHORT).show()
                 result.exceptionOrNull()?.printStackTrace()
             }
         }
