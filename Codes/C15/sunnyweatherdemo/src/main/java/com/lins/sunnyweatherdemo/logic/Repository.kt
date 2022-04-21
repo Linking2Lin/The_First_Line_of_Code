@@ -1,6 +1,8 @@
 package com.lins.sunnyweatherdemo.logic
 
+import android.util.Log
 import androidx.lifecycle.liveData
+import com.lins.sunnyweatherdemo.logic.model.LocationHF
 import com.lins.sunnyweatherdemo.logic.model.Place
 import com.lins.sunnyweatherdemo.logic.network.SunnyWeatherNetwork
 import kotlinx.coroutines.Dispatchers
@@ -18,14 +20,15 @@ object Repository {
     fun searchPlaces(query:String) = liveData(Dispatchers.IO){
         val result = try {
             val placeResponse = SunnyWeatherNetwork.searchPlaces(query)
-            if (placeResponse.status == "OK"){
-                val places = placeResponse.places
-                Result.success(placeResponse)
+            Log.d("获取数据", "searchPlaces: $placeResponse")
+            if (placeResponse.code == "200"){
+                val places = placeResponse.location
+                Result.success(places)
             }else{
-                Result.failure(RuntimeException("response status is ${placeResponse.status}"))
+                Result.failure(RuntimeException("response status is ${placeResponse.code}"))
             }
         }catch (e:Exception){
-            Result.failure<List<Place>>(e)
+            Result.failure<List<LocationHF>>(e)
         }
         emit(result)
     }

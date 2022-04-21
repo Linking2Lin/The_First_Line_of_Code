@@ -2,12 +2,19 @@ package com.lins.sunnyweatherdemo.logic.network
 
 import com.lins.sunnyweatherdemo.SunnyWeatherApplication
 import com.lins.sunnyweatherdemo.logic.model.PlaceResponse
+import com.lins.sunnyweatherdemo.logic.model.PlacesResponseHeFeng
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface PlaceService {
 
-    @GET("v2/place?token=${SunnyWeatherApplication.TOKEN}&lang=zh_CN")
-    fun searchPlaces(@Query("query") query: String): Call<PlaceResponse>
+    @Headers(
+        "Content-Type: application/json;charset=utf-8",
+        "Accept: application/json"
+    )
+    @GET("v2/city/lookup?key=${SunnyWeatherApplication.KEY}&lan=zh")//后面会自动加上位置参数
+    fun searchPlaces(@Query("location") location: String): Call<PlacesResponseHeFeng>
 }
