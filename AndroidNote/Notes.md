@@ -542,14 +542,67 @@ ___
 # C11 网络技术
 
 核心点：
-* 通过HTTP进行网络交互：两种方式：HttpURLConnection和OkHttp
+* 通过HTTP进行网络交互：两种方式：HttpURLConnection和OkHttp（Retrofit是OkHttp的封装）
 * 数据解析方式：XML和JSON，这是现在主流的数据载体方式
 * 回调机制和Retrofit：Re是现在主流的网络库
-* Kotlin的协程
+* Kotlin的协程（轻量化线程）
 
 
 
 ### WebView:内置浏览器的控件，可以在控件内实现简单的浏览器功能
+
+### HTTP（超文本传输协议）访问网络：
+工作原理（简单概括）：客户端向服务端发出一条请求，服务端收到请求后返回数据给客户端，客户端然后处理返回的数据
+
+#### HttpURLConnection方式（原生）： 
+使用：
+1. 获取HttpURLConnection实例：`val connection = url.openConnection() as HttpURLConnection`
+2. 设置请求使用方法：GET：从服务器获取数据，POST：向服务器提供数据 `connection.requestMethod = `
+3. 设置附加信息，如连接超时、读取超时等`connection. ...`
+4. 调用connection的输入流，得到服务器返回数据的输入流，对数据进行处理 `val input = connection.inputStream`
+5. 关闭HTTP连接`connection.disconnect()`
+
+#### OkHttp方式:
+使用：
+1. 创建OkHttpClient实例：`val client = OkHttpClient()`
+2. 发起GET请求：创建一个空Request对象：`val request = Request.Builder().build()`，在build前连缀其他方法来构建完整的Request对象
+3. 调用`newCall()`方法来创建一个Call对象并调用其`execute()`来发送请求并获取返回数据`val response = client.newCall(request).execute()`,返回的是一个Response对象，里面封装了服务器返回的数据,需要对该对象进行处理
+4. 发起POST请求：构建一个RequestBody对象来存放待提交的参数`val requestBody = FormBody.Builder().add()... .build()`
+5. 向request对象中添加RequestBody，
+6. 之后同GET请求相同
+
+#### 数据载体：
+
+##### XML(可扩展标记语言)：
+常用解析方式：
+* PULL（官方推荐）：基于流的形式，读取节点事件然后回调开发者编写的逻辑
+* SAX：也是基于流的形式
+* DOM：一次性将xml全部加载进内存并映射为树结构对象
+
+##### JSON(JavaScript Object Notation，JS对象标记)
+常用解析方式：
+* JSONObject：官方提供，
+* GSON：Google的一个开源库，自动将JSON对象映射为使用语言对象
+
+#### 网络请求回调形式
+通常情况下，一个程序需要在不同地方使用网络功能，而发送请求的代码基本是相同的，因此，应该将通用的网络操作提取到一个公共类中并提供通用方法，当发起网络请求时，调用该方法即可
+
+回调函数：一段以参数形式传递给其他代码的可执行代码
+假设我们要执行某项任务，该任务需要依赖某服务S，那么该任务可以分为PA（调用S前部分），PB（调用S后部分）
+常规模式：PA、PB由服务方执行，也就是PA执行完后，等S执行完后，再去执行PB，即：调用完S后我去执行PB
+回调模式：服务方执行PA，然后将PB交给服务S，即告诉服务方执行完S然后去执行PB，即：调用完S后你接着执行PB  
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### Android网络交互方式：
