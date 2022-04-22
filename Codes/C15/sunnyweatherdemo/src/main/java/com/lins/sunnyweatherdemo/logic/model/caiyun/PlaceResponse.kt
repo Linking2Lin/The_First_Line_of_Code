@@ -1,4 +1,4 @@
-package com.lins.sunnyweatherdemo.logic.model
+package com.lins.sunnyweatherdemo.logic.model.caiyun
 
 import com.google.gson.annotations.SerializedName
 
@@ -23,7 +23,7 @@ data class PlaceResponse(val status:String,val places:List<Place>)
  * 城市名，位置，格式化地址，
  * SerializedName：让JSON字段和kotlin字段之间建立联系
  */
-data class Place(val name:String,val location:Location,@SerializedName("formatted_address") val address:String)
+data class Place(val name:String, val location: Location, @SerializedName("formatted_address") val address:String)
 
 /**
  * 位置对象，包括经纬度信息

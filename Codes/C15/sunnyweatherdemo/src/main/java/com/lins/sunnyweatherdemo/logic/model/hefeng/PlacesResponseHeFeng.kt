@@ -18,8 +18,8 @@ data class PlacesResponseHeFeng(val code:String,val location:List<LocationHF>,va
 data class LocationHF(
     val name:String,
     val id:String,
-    val lat:String,
-    val lon:String,
+    val lat:String,//纬度
+    val lon:String,//经度
     val adm2:String,
     val adm1:String,
     val country:String,

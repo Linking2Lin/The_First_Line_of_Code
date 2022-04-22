@@ -1,4 +1,4 @@
-package com.lins.sunnyweatherdemo.logic.model
+package com.lins.sunnyweatherdemo.logic.model.hefeng
 
 /**
  * 实时天气数据模型
@@ -14,8 +14,8 @@ data class RealtimeResponseHeFeng(
     val code:String,//API状态码
     val updateTime:String,//当前API的最近更新时间
     val fxLink:String,//当前数据的响应式页面
-    val now:Now,//当前天气数据对象
-    val refer:Refer//参考
+    val now: Now,//当前天气数据对象
+    val refer: Refer//参考
     ){
 
     data class Now(

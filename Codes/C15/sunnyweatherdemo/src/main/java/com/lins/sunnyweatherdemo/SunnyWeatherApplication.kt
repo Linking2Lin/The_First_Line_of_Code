@@ -21,6 +21,8 @@ class SunnyWeatherApplication:Application() {
         const val KEY = "607b7784a83347ce87ca042671a5cde2"
         /**高德天气KEY*/
         //const val KEY = "14fd98ccb4ed94f7ea275a92756d038d"
+        /**彩云天气Token*/
+        const val Token = "VoBTaiBqaJcnZFUW"
     }
 
     //在应用启动时会执行，这样伴生对象内的context就会得到程序全局context

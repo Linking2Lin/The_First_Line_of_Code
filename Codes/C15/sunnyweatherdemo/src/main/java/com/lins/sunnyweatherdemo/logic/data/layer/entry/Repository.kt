@@ -1,11 +1,9 @@
-package com.lins.sunnyweatherdemo.logic
+package com.lins.sunnyweatherdemo.logic.data.layer.entry
 
 import android.util.Log
 import androidx.lifecycle.liveData
-import com.lins.sunnyweatherdemo.logic.model.LocationHF
-import com.lins.sunnyweatherdemo.logic.model.Place
-import com.lins.sunnyweatherdemo.logic.model.Weather
-import com.lins.sunnyweatherdemo.logic.network.SunnyWeatherNetwork
+import com.lins.sunnyweatherdemo.logic.model.hefeng.WeatherHeFeng
+import com.lins.sunnyweatherdemo.logic.network.hefeng.SunnyWeatherNetwork
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -45,7 +43,7 @@ object Repository {
                 val dailyResponseHeFeng = deferredDaily.await()
 
                 if (realtimeResponseHeFeng.code == "200"&& dailyResponseHeFeng.code == "200"){
-                    val wearther = Weather(realtimeResponseHeFeng.now,dailyResponseHeFeng.daily)
+                    val wearther = WeatherHeFeng(realtimeResponseHeFeng.now,dailyResponseHeFeng.daily)
                     Result.success(wearther)
                 }else{
                     Result.failure(

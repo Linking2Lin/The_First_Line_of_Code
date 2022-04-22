@@ -1,4 +1,4 @@
-package com.lins.sunnyweatherdemo.logic.network
+package com.lins.sunnyweatherdemo.logic.network.hefeng
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
