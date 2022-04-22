@@ -3,74 +3,53 @@ package com.example.networktest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.networktest.callbacks.HttpCallbacklistener
-import com.example.networktest.callbacks.Httputil
 import com.example.networktest.databinding.ActivityMainBinding
-import com.example.networktest.gson.App
-import com.google.gson.Gson
-import com.google.gson.JsonArray
-import com.google.gson.reflect.TypeToken
-import okhttp3.*
-import org.json.JSONArray
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserFactory
-import java.io.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
-import kotlin.Exception
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.sendRequest.setOnClickListener {
+        binding.sendRequestBtn.setOnClickListener {
             //sendRequestWithHttpURLConnection()
-            //sendRequestWithOkHttp
-            //withCallbackHttpURLConnection()
-            withCallbackHttpURLConnection()
+            sendRequestWithOkHttp()
         }
     }
 
     private fun sendRequestWithHttpURLConnection(){
-        thread {
-            var connection:HttpURLConnection? = null
+        thread {//开启线程执行网络请求操作
+            var connection:HttpURLConnection ?= null
             try {
-                val response = StringBuilder()
-                val url = URL("https://www.bing.com")
+                val response = StringBuilder()//返回数据
+                var url = URL("https:www.baidu.com")//构建URL对象
                 connection = url.openConnection() as HttpURLConnection
-                connection.connectTimeout = 7777
-                connection.readTimeout = 7777
+                connection.connectTimeout = 7777//连接超时时间
+                connection.readTimeout = 7777//读取超时时间
+
                 val input = connection.inputStream
                 val reader = BufferedReader(InputStreamReader(input))
                 reader.use {
                     reader.forEachLine {
                         response.append(it)
+                        Log.d("当前行数", "sendRequestWithHttpURLConnection: ${response.length}")
                     }
                 }
-                showresponse(response.toString())
+                showReponse(response.toString())
+
             }catch (e:Exception){
                 e.printStackTrace()
             }finally {
                 connection?.disconnect()
             }
-            /*
-
-            //向服务器写数据:
-            connection?.requestMethod = "POST"
-            val output = DataOutputStream(connection?.outputStream)
-            output.writeBytes("username=admain&password=123456")
-
-             */
-        }
-    }
-
-    private fun showresponse(str:String){
-        runOnUiThread {
-            binding.responseText.text = str
         }
     }
 
@@ -79,16 +58,15 @@ class MainActivity : AppCompatActivity() {
             try {
                 val client = OkHttpClient()
                 val request = Request.Builder()
-                    //.url("http://10.0.2.2:7777/get_data.xml")
-                    .url("http://10.0.2.2:7777/get_data.json")
+                    .url("https://www.bing.com")
                     .build()
+
                 val response = client.newCall(request).execute()
-                val responseData = response.body?.string()
-                if (responseData!= null){
-                    //showresponse(responseData)
-                    //parseXMLWithPull(responseData)
-                    //parseJSONWithJSONObject(responseData)
-                    parseJSONWithGSON(responseData)
+
+                val ressponseData = response.body?.string()//将返回的数据对象转为字符串，返回可能为空，因此做判空处理
+
+                if (ressponseData != null){
+                    showReponse(ressponseData)
                 }
             }catch (e:Exception){
                 e.printStackTrace()
@@ -96,92 +74,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun parseXMLWithPull(xmlData:String){
-        try {
-            val factory = XmlPullParserFactory.newInstance()//工厂实例
-            val xmlPullParser = factory.newPullParser()//借助工厂实例获取解析器实例
-            xmlPullParser.setInput(StringReader(xmlData))//将字符串以流的形式处理
-            var eventType = xmlPullParser.eventType//获取当前解析事件
-            var name = ""
-            var id = ""
-            var version = ""
-            while (eventType != XmlPullParser.END_DOCUMENT){//当解析事件不是文档结束时循环
-                val nodeName = xmlPullParser.name//获取当前节点名字
-                when(eventType){
-                    //开始解析某个节点
-                    XmlPullParser.START_TAG ->{//节点开始
-                        when(nodeName){
-                            //如果节点名为以下之一，则调用nextText获取节点内具体内容
-                            "id" ->id = xmlPullParser.nextText()
-                            "name" -> name = xmlPullParser.nextText()
-                            "version" -> version = xmlPullParser.nextText()
-                        }
-                    }
-                    XmlPullParser.END_TAG->{//节点结束
-                        if ("app"==nodeName){//如果是app节点结束，则将数据进行输出
-                            Log.d("XMLPULL", "parseXMLWithPull: $id")
-                            Log.d("XMLPULL", "parseXMLWithPull: $name")
-                            Log.d("XMLPULL", "parseXMLWithPull: $version")
-                        }
-                    }
+    private fun showReponse(response:String){
+        runOnUiThread {
+            /*异步的封装
+            public final void runOnUiThread(Runnable action) {
+                if (Thread.currentThread() != mUiThread) {
+                    mHandler.post(action);
+                } else {
+                    action.run();
                 }
-                eventType = xmlPullParser.next()//指向下一个事件
-            }
-        }catch (e:Exception){
-            e.printStackTrace()
+             }
+             */
+            binding.reponseText.text = response
         }
-    }
-
-    private fun parseJSONWithJSONObject(jsonData:String){
-        try {
-            val jsonArray = JSONArray(jsonData)
-            for (i in 0 until jsonArray.length()){
-                val jsonObject = jsonArray.getJSONObject(i)
-                val id = jsonObject.getString("id")
-                val name = jsonObject.getString("name")
-                val version = jsonObject.getString("version")
-                Log.d("数据: ", "parseJSONWithJSONObject: $id   $name   $version")
-            }
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
-    }
-
-    private fun parseJSONWithGSON(jsonData:String){
-        val gson = Gson()
-        val typeOf = object :TypeToken<List<App>>(){}.type
-        val appList = gson.fromJson<List<App>>(jsonData,typeOf)
-
-        for (app in appList){
-            Log.d("数据", "parseJSONWithGSON: ${app.id}   ${app.name}   ${app.version}")
-        }
-    }
-
-    private fun withCallbackHttpURLConnection(){
-        Httputil.sendHttpRequest("http://10.0.2.2:7777/get_data.json",object : HttpCallbacklistener{
-            override fun onFinnishi(response: String) {
-                parseJSONWithGSON(response)
-            }
-
-            override fun onError(e: Exception) {
-                e.printStackTrace()
-            }
-
-        })
-    }
-
-    private fun withCallbackOkHttp(){
-        Httputil.sendPkHttpRequest("http://10.0.2.2:7777/get_data.json",object : Callback{
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val jsData = response.body?.string()
-                if (jsData != null) {
-                    parseJSONWithGSON(jsData)
-                }
-            }
-        })
     }
 }
