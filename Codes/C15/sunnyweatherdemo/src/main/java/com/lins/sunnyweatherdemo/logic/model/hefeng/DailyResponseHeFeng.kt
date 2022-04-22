@@ -1,4 +1,4 @@
-package com.lins.sunnyweatherdemo.logic.model
+package com.lins.sunnyweatherdemo.logic.model.hefeng
 
 /**
  *
@@ -10,7 +10,7 @@ package com.lins.sunnyweatherdemo.logic.model
  * ----------------------------------------------------
  */
 
-data class DailyResponseHeFeng(val code:String, val updateTime:String, val fxLink:String, val daily:Daily, val refer:Refer){
+data class DailyResponseHeFeng(val code:String, val updateTime:String, val fxLink:String, val daily: Daily, val refer: Refer){
 
     data class Daily(
         val fxDate:String,

@@ -1,11 +1,9 @@
-package com.lins.sunnyweatherdemo.logic.network
+package com.lins.sunnyweatherdemo.logic.network.hefeng
 
 import com.lins.sunnyweatherdemo.SunnyWeatherApplication
-import com.lins.sunnyweatherdemo.logic.model.PlaceResponse
 import com.lins.sunnyweatherdemo.logic.model.PlacesResponseHeFeng
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.Query
 

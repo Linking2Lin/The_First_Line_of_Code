@@ -1,11 +1,10 @@
-package com.lins.sunnyweatherdemo.ui.place
+package com.lins.sunnyweatherdemo.ui.place.hefeng
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.lins.sunnyweatherdemo.logic.Repository
+import com.lins.sunnyweatherdemo.logic.data.layer.entry.Repository
 import com.lins.sunnyweatherdemo.logic.model.LocationHF
-import com.lins.sunnyweatherdemo.logic.model.Place
 
 /**
  *

@@ -1,4 +1,4 @@
-package com.lins.sunnyweatherdemo.ui.place
+package com.lins.sunnyweatherdemo.ui.place.hefeng
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +7,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.lins.sunnyweatherdemo.R
-import com.lins.sunnyweatherdemo.logic.model.Location
 import com.lins.sunnyweatherdemo.logic.model.LocationHF
-import com.lins.sunnyweatherdemo.logic.model.Place
 
 class PlaceAdapter(private val fragment:Fragment,private val placeList:List<LocationHF>):RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
     inner class ViewHolder(view: View):RecyclerView.ViewHolder(view){
