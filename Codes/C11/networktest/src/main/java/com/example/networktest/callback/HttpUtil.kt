@@ -1,6 +1,5 @@
-package com.example.retrofittest.callbacks
+package com.example.networktest.callback
 
-import com.example.networktest.callbacks.HttpCallbacklistener
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.BufferedReader
@@ -9,8 +8,9 @@ import java.net.HttpURLConnection
 import java.net.URL
 import kotlin.concurrent.thread
 
-object Httputil {
-    fun sendHttpRequest(address:String,listener: HttpCallbacklistener){
+object HttpUtil {
+
+    fun sendHttpRequest(address:String,listener: HttpCallbackListener){
         thread {
             var connection:HttpURLConnection ?= null
             try {
@@ -26,19 +26,23 @@ object Httputil {
                         response.append(it)
                     }
                 }
-                //回调onFinish方法
-                listener.onFinnishi(response.toString())
+                listener.onFinish(response.toString())//在新开的这个线程内执行onFinish函数
             }catch (e:Exception){
-                listener.onError(e)
+                e.printStackTrace()
+                listener.onError(e)//在新开的这个线程内执行onError函数
             }finally {
                 connection?.disconnect()
             }
         }
     }
-
-    fun sendPkHttpRequest(address: String,callback:okhttp3.Callback){
+                                                            //库中自带的回调接口
+    fun sendOkHttpRequest(address: String,callback:okhttp3.Callback){
         val client = OkHttpClient()
-        val request = Request.Builder().url(address).build()
+
+        val request = Request.Builder()
+            .url(address)
+            .build()
+                                //内部开启子线程，并将最终的请求结果回调到okhttp3.Callback中
         client.newCall(request).enqueue(callback)
     }
 }

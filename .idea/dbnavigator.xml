@@ -46,9 +46,9 @@
     <connection id="1c8c5ee7-7f75-47c3-8b2f-4820efb221ba" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="9b8d9285-832e-48c5-9ebd-dcf28a0ab914" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="eecc478c-50bb-4587-874a-eafce1f9090c" dataset="main.User" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="eecc478c-50bb-4587-874a-eafce1f9090c" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="9b8d9285-832e-48c5-9ebd-dcf28a0ab914" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
