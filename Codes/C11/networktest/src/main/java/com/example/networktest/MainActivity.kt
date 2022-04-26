@@ -3,10 +3,12 @@ package com.example.networktest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.example.networktest.callback.HttpCallbackListener
+import com.example.networktest.callback.HttpUtil
 import com.example.networktest.databinding.ActivityMainBinding
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import okhttp3.*
 import java.io.BufferedReader
+import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
@@ -51,6 +53,17 @@ class MainActivity : AppCompatActivity() {
                 connection?.disconnect()
             }
         }
+
+        HttpUtil.sendHttpRequest("Http:\\www.baidu.com",object : HttpCallbackListener{
+            override fun onFinish(response: String) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onError(e: Exception) {
+                TODO("Not yet implemented")
+            }
+        })
+
     }
 
     private fun sendRequestWithOkHttp(){
@@ -72,6 +85,18 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
+
+        HttpUtil.sendOkHttpRequest("Http:\\www.baidu.com",object : Callback{
+            //失败后执行
+            override fun onFailure(call: Call, e: IOException) {
+                TODO("Not yet implemented")
+            }
+
+            //得到响应后执行
+            override fun onResponse(call: Call, response: Response) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     private fun showReponse(response:String){
