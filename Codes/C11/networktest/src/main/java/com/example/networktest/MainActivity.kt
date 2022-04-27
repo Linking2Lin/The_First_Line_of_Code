@@ -13,6 +13,9 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import kotlin.concurrent.thread
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -111,6 +114,28 @@ class MainActivity : AppCompatActivity() {
              }
              */
             binding.reponseText.text = response
+        }
+    }
+
+    /**
+     * 这个挂起函数实现：
+     * 通过suspendCoroutine实现挂起当前协程，内部代码运行在一个普通的子线程中，
+     * 之后在内部发起请求，并通过回调监听结果，
+     * 请求成功：恢复协程，并返回响应数据作为函数返回值
+     * 请求失败：恢复协程，同时传入具体的异常原因
+     */
+    suspend fun request(address:String):String{
+        return suspendCoroutine { continuation ->
+            HttpUtil.sendHttpRequest(address,object : HttpCallbackListener{
+                //请求成功
+                override fun onFinish(response: String) {
+                    continuation.resume(response)
+                }
+                //请求失败
+                override fun onError(e: Exception) {
+                    continuation.resumeWithException(e)
+                }
+            })
         }
     }
 }
