@@ -15,7 +15,7 @@ object SunnyWeatherNetworkCaiYun {
     //挂起函数，用来发起搜索城市请求
     suspend fun searchPlaces(query:String) = placeService.searchPlaces(query).await()
 
-    //将await定义为Call<T>的扩展函数
+    //将await定义为Call<T>的扩展函数,实现回调简化
     private suspend fun <T> Call<T>.await():T{
                //在协程作用域内才能调用，将当前协程挂起，然后在一个普通的线程中执行Lambda表达式中的代码
         return suspendCoroutine { continuation ->
