@@ -1,5 +1,6 @@
 package com.lins.sunnyweatherdemo.logic.network.caiyun
 
+import com.lins.sunnyweatherdemo.logic.network.hefeng.WeatherService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,8 +13,14 @@ object SunnyWeatherNetworkCaiYun {
     //创建一个placeService接口动态管理对象
     private val placeService = ServiceCreatorCaiYun.create<PlaceServiceCaiYun>()
 
+    private val weatherService = ServiceCreatorCaiYun.create<CaiYunWeatherService>()
+
     //挂起函数，用来发起搜索城市请求
     suspend fun searchPlaces(query:String) = placeService.searchPlaces(query).await()
+
+    suspend fun getDailyWeather(lng:String,lat:String) = weatherService.getDailyWeather(lng, lat).await()
+
+    suspend fun getRealTimeWeather(lng: String,lat: String) = weatherService.getRealtimeWeather(lng, lat).await()
 
     //将await定义为Call<T>的扩展函数,实现回调简化
     private suspend fun <T> Call<T>.await():T{
