@@ -1,5 +1,6 @@
 package com.lins.sunnyweatherdemo.logic.network.caiyun
 
+import android.util.Log
 import com.lins.sunnyweatherdemo.logic.network.hefeng.WeatherService
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,6 +32,7 @@ object SunnyWeatherNetworkCaiYun {
                 //请求结果是响应：
                 override fun onResponse(call: Call<T>, response: Response<T>) {
                     val body = response.body()
+                    Log.d("响应数据", "onResponse: ${body.toString()}")
                     if (body != null) continuation.resume(body)
                     else continuation.resumeWithException(RuntimeException("response body is null"))
                 }

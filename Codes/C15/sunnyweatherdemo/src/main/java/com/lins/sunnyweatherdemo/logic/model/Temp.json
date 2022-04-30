@@ -4,45 +4,50 @@
   "api_status": "active",
   "lang": "zh_CN",
   "unit": "metric",
-  "tzshift": 7200,
-  "timezone": "Europe\/Berlin",
-  "server_time": 1651223679,
+  "tzshift": 28800,
+  "timezone": "Asia\/Shanghai",
+  "server_time": 1651285346,
   "location": [
-    50.6080651,
-    9.0284647
+    35.8894105,
+    109.1357285
   ],
   "result": {
     "realtime": {
       "status": "ok",
-      "temperature": 15.06,
-      "humidity": 0.59,
-      "cloudrate": 0.99,
-      "skycon": "CLOUDY",
-      "visibility": 24.13,
-      "dswrf": 427.6,
+      "temperature": 11.0,
+      "humidity": 0.24,
+      "cloudrate": 0.3,
+      "skycon": "PARTLY_CLOUDY_DAY",
+      "visibility": 30.0,
+      "dswrf": 343.1,
       "wind": {
-        "speed": 3.03,
-        "direction": 135.66
+        "speed": 16.99,
+        "direction": 9.0
       },
-      "pressure": 99291.29,
-      "apparent_temperature": 14.4,
+      "pressure": 89785.66,
+      "apparent_temperature": 6.3,
       "precipitation": {
         "local": {
           "status": "ok",
-          "datasource": "gfs",
+          "datasource": "radar",
+          "intensity": 0.0
+        },
+        "nearest": {
+          "status": "ok",
+          "distance": 10000.0,
           "intensity": 0.0
         }
       },
       "air_quality": {
-        "pm25": 12,
-        "pm10": 19,
-        "o3": 0,
-        "so2": 0,
-        "no2": 37,
-        "co": 0.24,
+        "pm25": 4,
+        "pm10": 38,
+        "o3": 78,
+        "so2": 5,
+        "no2": 10,
+        "co": 0.4,
         "aqi": {
-          "chn": 20,
-          "usa": 20
+          "chn": 38,
+          "usa": 35
         },
         "description": {
           "chn": "\u4f18",
@@ -51,12 +56,12 @@
       },
       "life_index": {
         "ultraviolet": {
-          "index": 2.0,
-          "desc": "\u5f88\u5f31"
+          "index": 6.0,
+          "desc": "\u4e2d\u7b49"
         },
         "comfort": {
-          "index": 6,
-          "desc": "\u51c9\u723d"
+          "index": 9,
+          "desc": "\u5bd2\u51b7"
         }
       }
     },

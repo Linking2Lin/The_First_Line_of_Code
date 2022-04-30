@@ -48,13 +48,13 @@ object RespositoryCaiYun {
                     SunnyWeatherNetworkCaiYun.getDailyWeather(lng, lat)
                 }
 
-                val realtimeResponse = deferredRealtime.await()
                 val dailyResponse = deferredDaily.await()
+                val realtimeResponse = deferredRealtime.await()
 
                 if (realtimeResponse.status == "ok" && dailyResponse.status == "ok"){
-                    Log.d("status", "refreshWeather: ${realtimeResponse.result.realTime}  ${dailyResponse.result.daily} ")
+                    Log.d("status", "refreshWeather: ${realtimeResponse.result.realtime}  ${dailyResponse.result.daily} ")
 
-                    val weather = Weather(realtimeResponse.result.realTime,dailyResponse.result.daily)
+                    val weather = Weather(realtimeResponse.result.realtime,dailyResponse.result.daily)
                     Log.d("status", "refreshWeather: ${realtimeResponse.status}  ${dailyResponse.status}   ${weather.realtime.temperature}")
 
                     Result.success(weather)

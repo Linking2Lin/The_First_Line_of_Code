@@ -1,6 +1,7 @@
 package com.lins.sunnyweatherdemo.logic.model.caiyun
 
 import com.google.gson.annotations.SerializedName
+import java.util.Date
 
 /**
  * 未来天气数据模型
@@ -24,7 +25,7 @@ data class CaiYunDailyResponse(val status:String,val result: ResultD) {
 
     data class Temperature(val max: Float, val min: Float)
 
-    data class Skycon(val value: String, val date: String)
+    data class Skycon(val value: String, val date: Date)
 
     data class LifeIndex(
         val coldRisk: List<LifeDescription>,
