@@ -1,12 +1,18 @@
 package com.lins.sunnyweatherdemo.ui.weather.caiyun
 
+import android.content.Context
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import com.lins.sunnyweatherdemo.R
 import com.lins.sunnyweatherdemo.databinding.ActivityWeatherBinding
@@ -22,10 +28,12 @@ class WeatherActivity : AppCompatActivity() {
 
     val viewModel by lazy { ViewModelProvider(this).get(CaiYunWeatherViewModel::class.java) }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         if (viewModel.locationLng.isEmpty()){
             viewModel.locationLng = intent.getStringExtra("location_lng") ?: ""
@@ -45,8 +53,35 @@ class WeatherActivity : AppCompatActivity() {
                 Toast.makeText(this, "Wufa", Toast.LENGTH_SHORT).show()
                 result.exceptionOrNull()?.printStackTrace()
             }
+            binding.swipeRefresh.isRefreshing = false
         }
-        viewModel.refreshWeather(viewModel.locationLng,viewModel.locationLat)
+        binding.swipeRefresh.setColorSchemeResources(R.color.black)
+        refreshWeather()
+        binding.swipeRefresh.setOnRefreshListener {
+            refreshWeather()
+        }
+
+        //viewModel.refreshWeather(viewModel.locationLng,viewModel.locationLat)
+
+        binding.nowLayout.navBtn.setOnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+        }
+        binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                //隐藏输入法
+                val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                manager.hideSoftInputFromWindow(drawerView.windowToken,InputMethodManager.HIDE_NOT_ALWAYS )
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+            }
+        })
 
     }
 
@@ -93,5 +128,10 @@ class WeatherActivity : AppCompatActivity() {
         binding.weatherLayout.visibility = View.VISIBLE
 
 
+    }
+
+    fun refreshWeather(){
+        viewModel.refreshWeather(viewModel.locationLng,viewModel.locationLat)
+        binding.swipeRefresh.isRefreshing = true
     }
 }
