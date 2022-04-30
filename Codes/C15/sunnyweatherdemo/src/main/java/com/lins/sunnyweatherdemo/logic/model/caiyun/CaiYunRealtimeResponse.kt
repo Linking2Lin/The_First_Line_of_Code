@@ -14,7 +14,7 @@ import com.google.gson.annotations.SerializedName
 
 data class CaiYunRealtimeResponse(val status:String,val result:Result) {
 
-    data class Result(val realTime: Realtime)
+    data class Result(val realtime: Realtime)
 
     data class Realtime(
         val skycon: String,
