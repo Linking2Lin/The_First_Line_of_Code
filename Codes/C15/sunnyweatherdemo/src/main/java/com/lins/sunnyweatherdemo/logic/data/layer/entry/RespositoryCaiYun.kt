@@ -2,6 +2,7 @@ package com.lins.sunnyweatherdemo.logic.data.layer.entry
 
 import android.util.Log
 import androidx.lifecycle.liveData
+import com.lins.sunnyweatherdemo.logic.dao.caiyun.PlaceDao
 import com.lins.sunnyweatherdemo.logic.model.caiyun.Place
 import com.lins.sunnyweatherdemo.logic.model.caiyun.Weather
 import com.lins.sunnyweatherdemo.logic.network.caiyun.SunnyWeatherNetworkCaiYun
@@ -71,4 +72,13 @@ object RespositoryCaiYun {
         }
         emit(result)
     }
+
+    //----------------------------------------------------------------------------------------------
+    //简便写法，应该在子线程中进行
+    fun savePlace(place: Place) = PlaceDao.savePlace(place)
+
+    fun getSavedPlace() = PlaceDao.getSavedPlace()
+
+    fun isPlaceSaved() = PlaceDao.isPlaceSaved()
+    //----------------------------------------------------------------------------------------------
 }

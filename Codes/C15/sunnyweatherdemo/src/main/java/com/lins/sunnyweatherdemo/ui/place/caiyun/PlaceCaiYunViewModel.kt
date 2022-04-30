@@ -28,4 +28,10 @@ class PlaceCaiYunViewModel:ViewModel() {
     fun searchPlaces(query:String){
         searchLiveData.value = query
     }
+
+    fun savedPlace(place: Place) = RespositoryCaiYun.savePlace(place)
+
+    fun getSavedPlace() = RespositoryCaiYun.getSavedPlace()
+
+    fun isPlaceSaved() = RespositoryCaiYun.isPlaceSaved()
 }
