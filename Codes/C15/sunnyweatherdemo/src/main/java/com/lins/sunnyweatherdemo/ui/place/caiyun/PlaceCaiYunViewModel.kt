@@ -10,8 +10,8 @@ import com.lins.sunnyweatherdemo.logic.model.caiyun.Place
  *
  * @author Lin
  * @date 2022/4/29
- *
- *
+ *git clone --bare https://github.com/Linking2Lin/The_First_Line_of_Code.git cd The_First_Line_of_Code.git
+ *https://github.com/Linking2Lin/The_First_Line_of_Code.git/'
  * ----------------------------------------------------
  * Tell me God,are you punishing me?
  * Is this the price I'm paying for my past mistakes? *
