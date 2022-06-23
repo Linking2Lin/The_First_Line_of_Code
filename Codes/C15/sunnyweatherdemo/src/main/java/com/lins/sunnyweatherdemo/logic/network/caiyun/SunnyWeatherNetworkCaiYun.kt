@@ -24,7 +24,7 @@ object SunnyWeatherNetworkCaiYun {
     suspend fun getRealTimeWeather(lng: String,lat: String) = weatherService.getRealtimeWeather(lng, lat).await()
 
     //将await定义为Call<T>的扩展函数,实现回调简化
-    private suspend fun <T> Call<T>.await():T{
+    private suspend fun <T> Call<T>.await(): T {
                //在协程作用域内才能调用，将当前协程挂起，然后在一个普通的线程中执行Lambda表达式中的代码
         return suspendCoroutine { continuation ->
             //该函数内部开启子线程，在子线程中执行HTTP请求，然后将请求结果回调到Callback中
