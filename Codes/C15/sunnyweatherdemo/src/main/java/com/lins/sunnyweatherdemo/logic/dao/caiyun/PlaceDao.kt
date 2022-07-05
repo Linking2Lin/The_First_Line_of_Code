@@ -8,6 +8,8 @@ import com.lins.sunnyweatherdemo.logic.model.caiyun.Place
 
 /**
  * 指向sunny_weather的DAO
+ * 与本地仓库进行交互的中间层
+ * DAO：data access object ，负责对固化数据进行操作
  * @author Lin
  * @date 2022/4/30
  * ----------------------------------------------------
