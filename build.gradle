@@ -6,7 +6,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.2"//声明gradle插件，让gradle用来构建Android项目
+        classpath "com.android.tools.build:gradle:7.0.4"//声明gradle插件，让gradle用来构建Android项目
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'//声明kotlin插件
 
 
